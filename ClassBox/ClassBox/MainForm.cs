@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace ClassBox
 {
-    public partial class Form1 : MetroFramework.Forms.MetroForm
+    public partial class MainForm : MetroFramework.Forms.MetroForm
     {
-        public Form1()
+        DBConnect dbconn;
+
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            dbconn = new DBConnect();
         }
     }
 }
