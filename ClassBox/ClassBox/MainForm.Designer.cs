@@ -28,21 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn_createRoom = new MetroFramework.Controls.MetroButton();
+            this.roomListPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
+            // 
+            // btn_createRoom
+            // 
+            this.btn_createRoom.Location = new System.Drawing.Point(660, 63);
+            this.btn_createRoom.Name = "btn_createRoom";
+            this.btn_createRoom.Size = new System.Drawing.Size(117, 32);
+            this.btn_createRoom.TabIndex = 2;
+            this.btn_createRoom.Text = "방 생성";
+            this.btn_createRoom.Click += new System.EventHandler(this.btn_createRoom_Click);
+            // 
+            // roomListPanel
+            // 
+            this.roomListPanel.Location = new System.Drawing.Point(23, 120);
+            this.roomListPanel.Name = "roomListPanel";
+            this.roomListPanel.Size = new System.Drawing.Size(754, 307);
+            this.roomListPanel.TabIndex = 3;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.roomListPanel);
+            this.Controls.Add(this.btn_createRoom);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "방 목록";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private MetroFramework.Controls.MetroButton btn_createRoom;
+        private System.Windows.Forms.FlowLayoutPanel roomListPanel;
     }
 }
 

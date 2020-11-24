@@ -16,6 +16,35 @@ namespace ClassBox
         private MySqlCommand comm;
         private MySqlDataReader myReader;
         
+        private void createConnection()
+        {
+            this.conn = new MySqlConnection(this.connectionString);
+
+            this.conn.Open();
+
+            this.comm = new MySqlCommand();
+            comm.Connection = conn;
+            
+        }
+        public void CreateRoom()
+        {
+            this.createConnection();
+
+            this.comm.CommandText = "SELECT MAX(no) FROM room";
+
+            int maxRoomno = 0;
+
+            using (myReader = comm.ExecuteReader())
+            {
+                if (myReader.Read())
+                {
+                    maxRoomno = Int32.Parse(myReader["MAX(no)"].ToString());
+                }
+            }
+
+            // this.comm.CommandText = 
+
+        }
         private void MysqlConnection()
         {
             using(conn = new MySqlConnection(this.connectionString))
@@ -44,7 +73,7 @@ namespace ClassBox
         }
         public DBConnect()
         {
-            this.MysqlConnection();
+           
         }
     }
 }
