@@ -39,6 +39,7 @@
             this.btn_createRoom.Size = new System.Drawing.Size(117, 32);
             this.btn_createRoom.TabIndex = 2;
             this.btn_createRoom.Text = "방 생성";
+            this.btn_createRoom.Visible = false;
             this.btn_createRoom.Click += new System.EventHandler(this.btn_createRoom_Click);
             // 
             // roomListPanel

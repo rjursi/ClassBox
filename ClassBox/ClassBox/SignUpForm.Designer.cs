@@ -36,10 +36,10 @@
             this.txtbox_name = new MetroFramework.Controls.MetroTextBox();
             this.lbl_name = new MetroFramework.Controls.MetroLabel();
             this.radio_professor = new MetroFramework.Controls.MetroRadioButton();
-            this.lbl_userType = new MetroFramework.Controls.MetroLabel();
             this.radio_stu = new MetroFramework.Controls.MetroRadioButton();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroPanel1.SuspendLayout();
+            this.lbl_userType = new MetroFramework.Controls.MetroLabel();
+            this.panel_userType = new MetroFramework.Controls.MetroPanel();
+            this.panel_userType.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_signUp
@@ -112,6 +112,16 @@
             this.radio_professor.Text = "교수자";
             this.radio_professor.UseVisualStyleBackColor = true;
             // 
+            // radio_stu
+            // 
+            this.radio_stu.AutoSize = true;
+            this.radio_stu.Location = new System.Drawing.Point(160, 46);
+            this.radio_stu.Name = "radio_stu";
+            this.radio_stu.Size = new System.Drawing.Size(59, 15);
+            this.radio_stu.TabIndex = 14;
+            this.radio_stu.Text = "학습자";
+            this.radio_stu.UseVisualStyleBackColor = true;
+            // 
             // lbl_userType
             // 
             this.lbl_userType.AutoSize = true;
@@ -120,40 +130,29 @@
             this.lbl_userType.Size = new System.Drawing.Size(83, 19);
             this.lbl_userType.TabIndex = 15;
             this.lbl_userType.Text = "사용자 유형";
-            this.lbl_userType.Click += new System.EventHandler(this.lbl_userType_Click);
             // 
-            // radio_stu
+            // panel_userType
             // 
-            this.radio_stu.AutoSize = true;
-            this.radio_stu.Location = new System.Drawing.Point(167, 46);
-            this.radio_stu.Name = "radio_stu";
-            this.radio_stu.Size = new System.Drawing.Size(59, 15);
-            this.radio_stu.TabIndex = 14;
-            this.radio_stu.Text = "학습자";
-            this.radio_stu.UseVisualStyleBackColor = true;
-            // 
-            // metroPanel1
-            // 
-            this.metroPanel1.Controls.Add(this.lbl_userType);
-            this.metroPanel1.Controls.Add(this.radio_stu);
-            this.metroPanel1.Controls.Add(this.radio_professor);
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
-            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(55, 232);
-            this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(249, 79);
-            this.metroPanel1.TabIndex = 16;
-            this.metroPanel1.VerticalScrollbarBarColor = true;
-            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 10;
+            this.panel_userType.Controls.Add(this.lbl_userType);
+            this.panel_userType.Controls.Add(this.radio_stu);
+            this.panel_userType.Controls.Add(this.radio_professor);
+            this.panel_userType.HorizontalScrollbarBarColor = true;
+            this.panel_userType.HorizontalScrollbarHighlightOnWheel = false;
+            this.panel_userType.HorizontalScrollbarSize = 10;
+            this.panel_userType.Location = new System.Drawing.Point(55, 232);
+            this.panel_userType.Name = "panel_userType";
+            this.panel_userType.Size = new System.Drawing.Size(249, 79);
+            this.panel_userType.TabIndex = 16;
+            this.panel_userType.VerticalScrollbarBarColor = true;
+            this.panel_userType.VerticalScrollbarHighlightOnWheel = false;
+            this.panel_userType.VerticalScrollbarSize = 10;
             // 
             // SignUpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(361, 383);
-            this.Controls.Add(this.metroPanel1);
+            this.Controls.Add(this.panel_userType);
             this.Controls.Add(this.txtbox_name);
             this.Controls.Add(this.lbl_name);
             this.Controls.Add(this.btn_signUp);
@@ -163,8 +162,8 @@
             this.Controls.Add(this.lbl_id);
             this.Name = "SignUpForm";
             this.Text = "회원가입";
-            this.metroPanel1.ResumeLayout(false);
-            this.metroPanel1.PerformLayout();
+            this.panel_userType.ResumeLayout(false);
+            this.panel_userType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,8 +179,8 @@
         private MetroFramework.Controls.MetroTextBox txtbox_name;
         private MetroFramework.Controls.MetroLabel lbl_name;
         private MetroFramework.Controls.MetroRadioButton radio_professor;
-        private MetroFramework.Controls.MetroLabel lbl_userType;
         private MetroFramework.Controls.MetroRadioButton radio_stu;
-        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private MetroFramework.Controls.MetroLabel lbl_userType;
+        private MetroFramework.Controls.MetroPanel panel_userType;
     }
 }

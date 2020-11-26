@@ -15,6 +15,7 @@ namespace ClassBox
         private UserDTO userDTO;
         private UserDAO userDAO;
         
+       
         public UserDTO GetUserDTO()
         {
             return this.userDTO;
@@ -43,7 +44,7 @@ namespace ClassBox
             }
             else
             {
-                MessageBox.Show($"{userDTO.Name} 님 환영합니다","교수자 로그인", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"{userDTO.Name} 님 환영합니다","로그인", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                 this.DialogResult = DialogResult.OK;
@@ -56,6 +57,14 @@ namespace ClassBox
             using (SignUpForm signUpForm = new SignUpForm())
             {
                 signUpForm.ShowDialog();
+            }
+        }
+
+        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(this.DialogResult != DialogResult.OK)
+            {
+                this.DialogResult = DialogResult.Cancel;
             }
         }
     }

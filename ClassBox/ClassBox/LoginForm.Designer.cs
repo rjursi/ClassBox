@@ -101,6 +101,7 @@
             this.Controls.Add(this.lbl_id);
             this.Name = "LoginForm";
             this.Text = " 로그인";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

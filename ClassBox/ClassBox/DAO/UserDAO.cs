@@ -13,7 +13,7 @@ namespace ClassBox
             
             base.createConnection();
 
-            base.comm.CommandText = "SELECT name,accessno FROM user WHERE id=@id AND password=@password";
+            base.comm.CommandText = "SELECT name, accessno FROM user WHERE id=@id AND password=@password";
             base.comm.Parameters.AddWithValue("@password", userDTO.Password);
             base.comm.Parameters.AddWithValue("@id", userDTO.Id);
             using (base.myReader = base.comm.ExecuteReader())
@@ -26,25 +26,50 @@ namespace ClassBox
             }   
 
             Console.WriteLine(userDTO.Name + "님");
+
+            base.comm.Dispose();
+            base.conn.Close();
+
             return userDTO;
         }
 
 
-        public void SignUp(UserDTO userDTO)
+        public bool SignUp(UserDTO userDTO)
         {
-            base.createConnection();
+            bool isDuplicate = false;
+            createConnection();
 
-            base.comm.CommandText = "INSERT INTO user VALUES(@id, @name, @password, @accessno)";
+            comm.CommandText = "SELECT name FROM user WHERE id=@id";
 
-            base.comm.Parameters.AddWithValue("@id", userDTO.Id);
-            base.comm.Parameters.AddWithValue("@password", userDTO.Password);
-            base.comm.Parameters.AddWithValue("@name", userDTO.Name);
-            base.comm.Parameters.AddWithValue("@accessno", userDTO.Accessno);
+            comm.Parameters.AddWithValue("@id", userDTO.Id);
 
-            base.comm.ExecuteNonQuery();
+            using (myReader = comm.ExecuteReader())
+            {
+                while (myReader.Read())
+                {
+                    isDuplicate = myReader.IsDBNull(0) ? false : true;
+                }
 
-            
-            
+                if (isDuplicate)
+                {
+                    return false;
+                }
+
+                comm.CommandText = "INSERT INTO user VALUES(@id, @name, @password, @accessno)";
+
+                comm.Parameters.AddWithValue("@id", userDTO.Id);
+                comm.Parameters.AddWithValue("@password", userDTO.Password);
+                comm.Parameters.AddWithValue("@name", userDTO.Name);
+                comm.Parameters.AddWithValue("@accessno", userDTO.Accessno);
+
+                comm.ExecuteNonQuery();
+
+                comm.Dispose();
+                conn.Close();
+
+                return true;
+            }
+                
         }
     }
 }

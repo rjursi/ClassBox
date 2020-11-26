@@ -43,7 +43,7 @@ namespace ClassBox
 
             if (result > -1)
             {
-                MessageBox  .Show("방이 정상적으로 생성이 되었습니다.", "방 생성 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("방이 정상적으로 생성이 되었습니다.", "방 생성 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             else

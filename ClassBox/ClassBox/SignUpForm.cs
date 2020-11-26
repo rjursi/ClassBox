@@ -44,6 +44,9 @@ namespace ClassBox
                 return;
             }
 
+            this.userDTO.Id = this.txtbox_id.Text;
+            this.userDTO.Password = this.txtbox_password.Text;
+            this.userDTO.Name = this.txtbox_name.Text;
 
             if (radio_professor.Checked)
             {
@@ -54,22 +57,22 @@ namespace ClassBox
             }
             
 
-            this.userDTO.Id = this.txtbox_id.Text;
-            this.userDTO.Password = this.txtbox_password.Text;
-            this.userDTO.Name = this.txtbox_name.Text;
-
-
             UserDAO userDAO = new UserDAO();
 
-            userDAO.SignUp(this.userDTO);
+            bool result = userDAO.SignUp(this.userDTO);
 
-            MessageBox.Show("회원 가입이 완료되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+            if (result) // 아이디가 중복되지 않으면
+            {
+                MessageBox.Show("회원 가입이 완료되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("아이디가 중복되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
-        private void lbl_userType_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
