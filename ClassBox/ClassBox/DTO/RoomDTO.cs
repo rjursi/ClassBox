@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ClassBox
 {
 
-    class RoomDTO
+    public class RoomDTO
     {
         private int no;
         private string name;
@@ -15,7 +15,15 @@ namespace ClassBox
         private string createtime;
         private string ipaddress;
 
+        public RoomDTO()
+        {
+            this.no = 0;
+            this.name = "";
+            this.id = "";
+            this.createtime = "";
+            this.ipaddress = "";
 
+        }
         public int No {
             set
             {

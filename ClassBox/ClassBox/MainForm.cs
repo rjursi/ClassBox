@@ -14,7 +14,7 @@ namespace ClassBox
     public partial class MainForm : MetroForm
     {
         DBConnect dbconn;
-
+        UserDTO userDTO;
         public MainForm()
         {
             InitializeComponent();
@@ -22,7 +22,12 @@ namespace ClassBox
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // dbconn = new DBConnect();
+            using(LoginForm loginForm = new LoginForm())
+            {
+                var dialogResult = loginForm.ShowDialog(); // 로그인 창이 닫히면 결과 값을 가져옴
+
+                this.userDTO = loginForm.GetUserDTO(); // 로그인 시 해당 사용자의 정보를 가져옴
+            }
         }
 
         private void btn_createRoom_Click(object sender, EventArgs e)
