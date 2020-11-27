@@ -34,9 +34,14 @@ namespace ClassBox
                     if (this.userDTO.Accessno == 1)
                     {
                         this.btn_createRoom.Visible = true;
+                        // 교수님일 경우 방 목록
+                    }else if(this.userDTO.Accessno == 2)
+                    {
+                        //학생일 경우 방 목록 출력
                     }
                 }
-                else if(dialogResult == DialogResult.Cancel)
+
+                else if(dialogResult == DialogResult.Cancel) // 로그인 안하고 그냥 꺼버릴 경우
                 {
                     Application.Exit();
                 }
@@ -44,14 +49,57 @@ namespace ClassBox
             }
         }
 
+
+        private void GetAllRoomList()
+        {
+            // 처음 학생이든 교수자든 접속시 모든 방의 목록을 가져오는 함수
+
+
+        }
         private void btn_createRoom_Click(object sender, EventArgs e)
         {
+            // 방을 생성하는 경우는 교수자만 생성이 가능하므로 해당 로직은 교수자 방 생성 로직
+
 
             CreateRoom createRoomForm = new CreateRoom(this.userDTO);
-            createRoomForm.ShowDialog();
+            var result = createRoomForm.ShowDialog();
 
-            MetroButton button = new MetroButton();
-            roomListPanel.Controls.Add(button);
+            
+            if(result == DialogResult.OK)
+            {
+                MetroTile tile = new MetroTile();
+
+                RoomDTO roomDTO = createRoomForm.GetRoomDTO();
+
+                tile.Width = 141;
+                tile.Height = 86;
+
+                tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
+
+                tile.Text = roomDTO.Name;
+
+                tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
+                this.roomListPanel.Controls.Add(tile);
+
+                MessageBox.Show("방이 생성되었습니다.", "방 생성 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                using (ProfessorUploadForm professorUploadForm = new ProfessorUploadForm())
+                {
+                    var professorFormResult = professorUploadForm.ShowDialog();
+
+                    if(professorFormResult == DialogResult.OK)
+                    {
+                        this.roomListPanel.Controls.Remove(tile); // 내가 만든 것만 컨트롤을 지워버림
+                    }
+                }
+            }
+            
         }
+
+        private void roomTile_Click(object sender, EventArgs e)
+        {
+            // 해당 타일을 클릭하는 경우, 즉 학생이 접속하는 경우에 해당
+        }
+
     }
 }

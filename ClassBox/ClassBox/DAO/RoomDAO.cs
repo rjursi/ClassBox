@@ -11,6 +11,9 @@ namespace ClassBox
     {
         public void CreateRoom(RoomDTO roomDTO)
         {
+
+
+            
             createConnection();
 
             comm.CommandText = "SELECT MAX(no) FROM room";
@@ -29,6 +32,7 @@ namespace ClassBox
 
             } // 방 번호 할당
 
+            
             roomDTO.No = maxRoomno;
 
             comm.CommandText = "INSERT INTO room VALUES(@no, @name, @id, @createtime, @ipaddress)";

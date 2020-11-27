@@ -44,9 +44,9 @@
             // 
             // roomListPanel
             // 
-            this.roomListPanel.Location = new System.Drawing.Point(23, 120);
+            this.roomListPanel.Location = new System.Drawing.Point(40, 120);
             this.roomListPanel.Name = "roomListPanel";
-            this.roomListPanel.Size = new System.Drawing.Size(754, 307);
+            this.roomListPanel.Size = new System.Drawing.Size(737, 307);
             this.roomListPanel.TabIndex = 3;
             // 
             // MainForm

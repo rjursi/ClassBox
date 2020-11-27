@@ -20,10 +20,7 @@ namespace ClassBox
         
         private UserDTO userDTO;
         private RoomDTO roomDTO;
-        public CreateRoom(UserDTO userDTO)
-        {
-            this.userDTO = userDTO;
-        } 
+       
 
         public RoomDTO GetRoomDTO()
         {
@@ -114,16 +111,17 @@ namespace ClassBox
         }
        
 
-        public CreateRoom()
+        public CreateRoom(UserDTO userDTO)
         {
             InitializeComponent();
+            this.userDTO = userDTO;
         }
 
         private void btn_createRoom_Click(object sender, EventArgs e)
         {
             // MessageBox.Show(this.GetRealIpAddress().ToString());   
             RoomDAO roomDAO = new RoomDAO();
-            
+            this.roomDTO = new RoomDTO();
 
             if(txtbox_roomName.Text == "")
             {
@@ -131,13 +129,18 @@ namespace ClassBox
                 return; 
             }
 
-            roomDTO.IpAddress = this.GetRealIpAddress().ToString(); // 현재 컴퓨터의 IP 주소를 구한
+
+            // 폴더 생성하는 로직 추가
+
+            roomDTO.IpAddress = this.GetRealIpAddress().ToString(); // 현재 컴퓨터의 IP 주소를 구함
             roomDTO.Name = this.txtbox_roomName.Text;
             roomDTO.CreateTime = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             roomDTO.Id = this.userDTO.Id; 
             
-            
             roomDAO.CreateRoom(roomDTO); // 방을 생성하는데 필요한 roomDTO를 보냄
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
 
         }
     }
