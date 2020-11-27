@@ -100,6 +100,12 @@ namespace ClassBox
         private void roomTile_Click(object sender, EventArgs e)
         {
             // 해당 타일을 클릭하는 경우, 즉 학생이 접속하는 경우에 해당
+
+            if(this.userDTO.Accessno == 1) // 교수는 다른 방에 들어가지 못하도록 우선적으로 막음, 일단은
+            {
+                MessageBox.Show("학생만 다른 방에 들어갈 수 있습니다.", "방 들어가기", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btn_Logout_Click(object sender, EventArgs e)
