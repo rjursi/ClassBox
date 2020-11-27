@@ -89,6 +89,7 @@
             this.Controls.Add(this.panel_fileList);
             this.Name = "ProfessorUploadForm";
             this.Text = "파일 공유 관리";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfessorUploadForm_FormClosing);
             this.Load += new System.EventHandler(this.ProfessorUploadForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,39 @@ namespace ClassBox
 {
     class RoomDAO : DBConnect
     {
+        public ArrayList GetAllRoomList()
+        {
+            ArrayList roomList = new ArrayList();
+          
+            createConnection();
+
+            comm.CommandText = "SELECT * FROM room"; //모든 현재 생성된 방의 목록을 가져옴
+
+            using (myReader = comm.ExecuteReader()) {
+                while (myReader.Read())
+                {
+               
+
+                    RoomDTO roomDTO = new RoomDTO();
+
+                    roomDTO.No = Int32.Parse(myReader["no"].ToString());
+                    roomDTO.Name = myReader["name"].ToString();
+                    roomDTO.Id = myReader["id"].ToString();
+                    roomDTO.CreateTime = myReader["createtime"].ToString();
+                    roomDTO.IpAddress = myReader["ipaddress"].ToString();
+
+
+
+                    roomList.Add(roomDTO);
+
+                }
+
+            }
+            comm.Dispose();
+            conn.Close();
+
+            return roomList;
+        }
         public void CreateRoom(RoomDTO roomDTO)
         {
 
@@ -58,8 +92,21 @@ namespace ClassBox
 
             comm.Dispose();
             conn.Close();
+        }
+
+        public void RemoveRoom(RoomDTO roomDTO)
+        {
+            createConnection();
+
+            comm.CommandText = "DELETE FROM room WHERE id=@id";
+
+            comm.Parameters.AddWithValue("@id", roomDTO.Id);
+
+            comm.ExecuteNonQuery();
 
 
+            comm.Dispose();
+            conn.Close();
         }
     }
 }

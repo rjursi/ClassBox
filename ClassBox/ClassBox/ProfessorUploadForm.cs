@@ -47,11 +47,14 @@ namespace ClassBox
             
         }
 
-
-        
         private void ProfessorUploadForm_Load(object sender, EventArgs e)
         {
             SocketOn(); // 클라이언트의 연결을 받는 소켓을 만듬
+        }
+
+        private void ProfessorUploadForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

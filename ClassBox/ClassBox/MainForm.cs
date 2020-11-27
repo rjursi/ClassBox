@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
+using System.Collections;
+
 namespace ClassBox
 {
     public partial class MainForm : MetroForm
@@ -40,6 +42,8 @@ namespace ClassBox
                     {
                         this.lbl_username.Text = $"안녕하세요. {this.userDTO.Name} 학생 ";
                     }
+
+                    this.ShowAllRoomList(); // 기존에 데이터베이스에 저장되어있는 방 리스트를 가져옴
                 }
 
                 else if(dialogResult == DialogResult.Cancel) // 로그인 안하고 그냥 꺼버릴 경우
@@ -51,10 +55,28 @@ namespace ClassBox
         }
 
 
-        private void GetAllRoomList()
+        private void ShowAllRoomList()
         {
             // 처음 학생이든 교수자든 접속시 모든 방의 목록을 가져오는 함수
+            RoomDAO roomDAO = new RoomDAO();
+            ArrayList roomList = roomDAO.GetAllRoomList();
 
+            foreach(RoomDTO roomDTO in roomList)
+            {
+
+                MetroTile tile = new MetroTile();
+
+                tile.Width = 141;
+                tile.Height = 86;
+
+                tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
+
+                tile.Text = roomDTO.Name;
+
+                tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
+                this.roomListPanel.Controls.Add(tile);
+            }
+            
 
         }
         private void btn_createRoom_Click(object sender, EventArgs e)
@@ -82,15 +104,20 @@ namespace ClassBox
                 tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
                 this.roomListPanel.Controls.Add(tile);
 
-                MessageBox.Show("방이 생성되었습니다.", "방 생성 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // MessageBox.Show("방이 생성되었습니다.", "방 생성 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 using (ProfessorUploadForm professorUploadForm = new ProfessorUploadForm())
                 {
                     var professorFormResult = professorUploadForm.ShowDialog();
+                    // 사용이 끝나고 나면 해당 방이 없어지는 구조
 
                     if(professorFormResult == DialogResult.OK)
                     {
                         this.roomListPanel.Controls.Remove(tile); // 내가 만든 것만 컨트롤을 지워버림
+
+                        RoomDAO roomDAO = new RoomDAO();
+                        roomDAO.RemoveRoom(roomDTO); // 데이터베이스 상에서도 지워버림
+                        
                     }
                 }
             }
