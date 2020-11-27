@@ -30,11 +30,13 @@
         {
             this.btn_createRoom = new MetroFramework.Controls.MetroButton();
             this.roomListPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.btn_Logout = new MetroFramework.Controls.MetroButton();
+            this.lbl_username = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // btn_createRoom
             // 
-            this.btn_createRoom.Location = new System.Drawing.Point(660, 63);
+            this.btn_createRoom.Location = new System.Drawing.Point(660, 114);
             this.btn_createRoom.Name = "btn_createRoom";
             this.btn_createRoom.Size = new System.Drawing.Size(117, 32);
             this.btn_createRoom.TabIndex = 2;
@@ -44,22 +46,44 @@
             // 
             // roomListPanel
             // 
-            this.roomListPanel.Location = new System.Drawing.Point(40, 120);
+            this.roomListPanel.Location = new System.Drawing.Point(40, 152);
             this.roomListPanel.Name = "roomListPanel";
-            this.roomListPanel.Size = new System.Drawing.Size(737, 307);
+            this.roomListPanel.Size = new System.Drawing.Size(737, 275);
             this.roomListPanel.TabIndex = 3;
+            // 
+            // btn_Logout
+            // 
+            this.btn_Logout.Location = new System.Drawing.Point(702, 72);
+            this.btn_Logout.Name = "btn_Logout";
+            this.btn_Logout.Size = new System.Drawing.Size(75, 23);
+            this.btn_Logout.TabIndex = 4;
+            this.btn_Logout.Text = "로그아웃";
+            this.btn_Logout.Click += new System.EventHandler(this.btn_Logout_Click);
+            // 
+            // lbl_username
+            // 
+            this.lbl_username.AutoSize = true;
+            this.lbl_username.Location = new System.Drawing.Point(610, 43);
+            this.lbl_username.Name = "lbl_username";
+            this.lbl_username.Size = new System.Drawing.Size(82, 19);
+            this.lbl_username.TabIndex = 5;
+            this.lbl_username.Text = "안녕하세요.";
+            this.lbl_username.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbl_username);
+            this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.roomListPanel);
             this.Controls.Add(this.btn_createRoom);
             this.Name = "MainForm";
             this.Text = "방 목록";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -67,6 +91,8 @@
 
         private MetroFramework.Controls.MetroButton btn_createRoom;
         private System.Windows.Forms.FlowLayoutPanel roomListPanel;
+        private MetroFramework.Controls.MetroButton btn_Logout;
+        private MetroFramework.Controls.MetroLabel lbl_username;
     }
 }
 

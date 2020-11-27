@@ -22,6 +22,7 @@ namespace ClassBox
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.Visible = false;
             using(LoginForm loginForm = new LoginForm())
             {
                 var dialogResult = loginForm.ShowDialog(); // 로그인 창이 닫히면 결과 값을 가져옴
@@ -29,15 +30,15 @@ namespace ClassBox
                 if(dialogResult == DialogResult.OK)
                 {
                     this.userDTO = loginForm.GetUserDTO(); // 로그인 시 해당 사용자의 정보를 가져옴
-
+                    this.Visible = true;
 
                     if (this.userDTO.Accessno == 1)
                     {
                         this.btn_createRoom.Visible = true;
-                        // 교수님일 경우 방 목록
+                        this.lbl_username.Text = $"안녕하세요. {this.userDTO.Name} 님 ";
                     }else if(this.userDTO.Accessno == 2)
                     {
-                        //학생일 경우 방 목록 출력
+                        this.lbl_username.Text = $"안녕하세요. {this.userDTO.Name} 학생 ";
                     }
                 }
 
@@ -101,5 +102,9 @@ namespace ClassBox
             // 해당 타일을 클릭하는 경우, 즉 학생이 접속하는 경우에 해당
         }
 
+        private void btn_Logout_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
     }
 }
