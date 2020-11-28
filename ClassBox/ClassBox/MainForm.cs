@@ -17,6 +17,9 @@ namespace ClassBox
     {
        
         UserDTO userDTO; // 여기서 Accessno 에 따라 할 수 있는 역할이 달라짐
+        
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -58,6 +61,8 @@ namespace ClassBox
         private void ShowAllRoomList()
         {
             // 처음 학생이든 교수자든 접속시 모든 방의 목록을 가져오는 함수
+            this.roomListPanel.Controls.Clear();
+
             RoomDAO roomDAO = new RoomDAO();
             ArrayList roomList = roomDAO.GetAllRoomList();
 
@@ -96,7 +101,7 @@ namespace ClassBox
 
                 tile.Width = 141;
                 tile.Height = 86;
-
+                
                 tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
 
                 tile.Text = roomDTO.Name;
@@ -127,17 +132,38 @@ namespace ClassBox
         private void roomTile_Click(object sender, EventArgs e)
         {
             // 해당 타일을 클릭하는 경우, 즉 학생이 접속하는 경우에 해당
-
-            if(this.userDTO.Accessno == 1) // 교수는 다른 방에 들어가지 못하도록 우선적으로 막음, 일단은
+            Button joinRoom_tile = (MetroTile)sender;
+            int joinRoomNo = Int32.Parse(joinRoom_tile.Name.Split('_')[1]); // 클릭한 타일의 Name 값에 방 번호가 저장되어 있음
+            if(this.userDTO.Accessno == 1) // 교수는 다른 방에 들어가지 못하도록 우선적으로 막음, 일단은...
             {
                 MessageBox.Show("학생만 다른 방에 들어갈 수 있습니다.", "방 들어가기", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+
+            DialogResult stuFormResult;
+            RoomDAO roomDAO = new RoomDAO();
+            RoomDTO joinRoomDTO = new RoomDTO();
+
+            joinRoomDTO = roomDAO.GetJoinRoomDTO(joinRoomNo);
+
+            using (StudentDownloadForm studentDownloadForm = new StudentDownloadForm(userDTO, joinRoomDTO))
+            {
+                stuFormResult = studentDownloadForm.ShowDialog();
+            }
+            // 학생이 방에 들어가는 로직을 만들어야 함.
+            // 여기는 학생이 로그인 시 userDTO를 같이 넘겨줘야함
+
         }
 
         private void btn_Logout_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void btn_refreshRoom_Click(object sender, EventArgs e)
+        {
+            ShowAllRoomList();
         }
     }
 }

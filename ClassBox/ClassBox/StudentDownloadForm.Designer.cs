@@ -39,6 +39,7 @@
             this.btn_refresh.Size = new System.Drawing.Size(112, 47);
             this.btn_refresh.TabIndex = 0;
             this.btn_refresh.Text = "목록 새로고침";
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // panel_filelist
             // 
@@ -56,6 +57,8 @@
             this.Controls.Add(this.btn_refresh);
             this.Name = "StudentDownloadForm";
             this.Text = "파일 다운로드";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentDownloadForm_FormClosing);
+            this.Load += new System.EventHandler(this.StudentDownloadForm_Load);
             this.ResumeLayout(false);
 
         }

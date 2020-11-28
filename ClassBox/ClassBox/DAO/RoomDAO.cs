@@ -43,6 +43,32 @@ namespace ClassBox
 
             return roomList;
         }
+
+        public RoomDTO GetJoinRoomDTO(int roomNo)
+        {
+            createConnection();
+
+            comm.CommandText = "SELECT * FROM room WHERE no = @no";
+            comm.Parameters.AddWithValue("@no", roomNo);
+
+
+            using (myReader = comm.ExecuteReader())
+            {
+                RoomDTO roomDTO = new RoomDTO();
+
+                if (myReader.Read())
+                {
+                    
+                    roomDTO.No = Int32.Parse(myReader["no"].ToString());
+                    roomDTO.Id = myReader["id"].ToString();
+                    roomDTO.Name = myReader["name"].ToString();
+                    roomDTO.CreateTime = myReader["createtime"].ToString();
+                    roomDTO.IpAddress = myReader["ipaddress"].ToString(); 
+                }
+
+                return roomDTO;
+            }
+        }
         public void CreateRoom(RoomDTO roomDTO)
         {
 

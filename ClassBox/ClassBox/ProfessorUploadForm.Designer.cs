@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel_fileList = new System.Windows.Forms.FlowLayoutPanel();
             this.listbox_stuList = new System.Windows.Forms.ListBox();
             this.lbl_userList = new MetroFramework.Controls.MetroLabel();
             this.btn_fileUpload = new MetroFramework.Controls.MetroButton();
             this.btn_fileDelete = new MetroFramework.Controls.MetroButton();
+            this.timer_stuListUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // panel_fileList
@@ -77,6 +79,10 @@
             this.btn_fileDelete.TabIndex = 3;
             this.btn_fileDelete.Text = "파일 삭제";
             // 
+            // timer_stuListUpdate
+            // 
+            this.timer_stuListUpdate.Tick += new System.EventHandler(this.timer_stuListUpdate_Tick);
+            // 
             // ProfessorUploadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -103,5 +109,6 @@
         private MetroFramework.Controls.MetroLabel lbl_userList;
         private MetroFramework.Controls.MetroButton btn_fileUpload;
         private MetroFramework.Controls.MetroButton btn_fileDelete;
+        private System.Windows.Forms.Timer timer_stuListUpdate;
     }
 }

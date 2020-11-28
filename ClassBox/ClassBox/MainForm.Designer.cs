@@ -32,6 +32,7 @@
             this.roomListPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btn_Logout = new MetroFramework.Controls.MetroButton();
             this.lbl_username = new MetroFramework.Controls.MetroLabel();
+            this.btn_refreshRoom = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // btn_createRoom
@@ -70,11 +71,21 @@
             this.lbl_username.Text = "안녕하세요.";
             this.lbl_username.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btn_refreshRoom
+            // 
+            this.btn_refreshRoom.Location = new System.Drawing.Point(543, 114);
+            this.btn_refreshRoom.Name = "btn_refreshRoom";
+            this.btn_refreshRoom.Size = new System.Drawing.Size(111, 32);
+            this.btn_refreshRoom.TabIndex = 6;
+            this.btn_refreshRoom.Text = "새로고침";
+            this.btn_refreshRoom.Click += new System.EventHandler(this.btn_refreshRoom_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_refreshRoom);
             this.Controls.Add(this.lbl_username);
             this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.roomListPanel);
@@ -93,6 +104,7 @@
         private System.Windows.Forms.FlowLayoutPanel roomListPanel;
         private MetroFramework.Controls.MetroButton btn_Logout;
         private MetroFramework.Controls.MetroLabel lbl_username;
+        private MetroFramework.Controls.MetroButton btn_refreshRoom;
     }
 }
 
