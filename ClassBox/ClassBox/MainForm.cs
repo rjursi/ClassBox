@@ -147,12 +147,22 @@ namespace ClassBox
 
             joinRoomDTO = roomDAO.GetJoinRoomDTO(joinRoomNo);
 
-            using (StudentDownloadForm studentDownloadForm = new StudentDownloadForm(userDTO, joinRoomDTO))
+            if (!joinRoomDTO.Name.Equals(""))
             {
-                stuFormResult = studentDownloadForm.ShowDialog();
+                using (StudentDownloadForm studentDownloadForm = new StudentDownloadForm(userDTO, joinRoomDTO))
+                {
+                    stuFormResult = studentDownloadForm.ShowDialog();
+                }
+                // 학생이 방에 들어가는 로직을 만들어야 함.
+                // 여기는 학생이 로그인 시 userDTO를 같이 넘겨줘야함
             }
-            // 학생이 방에 들어가는 로직을 만들어야 함.
-            // 여기는 학생이 로그인 시 userDTO를 같이 넘겨줘야함
+            else
+            {
+                MessageBox.Show("해당 방은 없는 방입니다. 방 목록을 새로고침 합니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                ShowAllRoomList();
+            }
+
 
         }
 

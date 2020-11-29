@@ -35,6 +35,8 @@
             this.btn_fileUpload = new MetroFramework.Controls.MetroButton();
             this.btn_fileDelete = new MetroFramework.Controls.MetroButton();
             this.timer_stuListUpdate = new System.Windows.Forms.Timer(this.components);
+            this.fileDlg_selectFile = new System.Windows.Forms.OpenFileDialog();
+            this.timer_fileListUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // panel_fileList
@@ -70,6 +72,7 @@
             this.btn_fileUpload.Size = new System.Drawing.Size(125, 35);
             this.btn_fileUpload.TabIndex = 3;
             this.btn_fileUpload.Text = "파일 업로드";
+            this.btn_fileUpload.Click += new System.EventHandler(this.btn_fileUpload_Click);
             // 
             // btn_fileDelete
             // 
@@ -82,6 +85,14 @@
             // timer_stuListUpdate
             // 
             this.timer_stuListUpdate.Tick += new System.EventHandler(this.timer_stuListUpdate_Tick);
+            // 
+            // fileDlg_selectFile
+            // 
+            this.fileDlg_selectFile.FileName = "openFileDialog1";
+            // 
+            // timer_fileListUpdate
+            // 
+            this.timer_fileListUpdate.Tick += new System.EventHandler(this.timer_fileListUpdate_Tick);
             // 
             // ProfessorUploadForm
             // 
@@ -110,5 +121,7 @@
         private MetroFramework.Controls.MetroButton btn_fileUpload;
         private MetroFramework.Controls.MetroButton btn_fileDelete;
         private System.Windows.Forms.Timer timer_stuListUpdate;
+        private System.Windows.Forms.OpenFileDialog fileDlg_selectFile;
+        private System.Windows.Forms.Timer timer_fileListUpdate;
     }
 }

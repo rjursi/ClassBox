@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-
+using MetroFramework.Controls;
 
 
 namespace ClassBox
@@ -17,7 +17,10 @@ namespace ClassBox
     public partial class ProfessorUploadForm : MetroForm
     {
         private ServerSocketWork serverSocketWork;
-        private int stuList = 0;
+        private ServerFileControl serverFileControl;
+        
+        
+      
         public ProfessorUploadForm()
         {
             InitializeComponent();
@@ -26,16 +29,22 @@ namespace ClassBox
   
         private void ProfessorUploadForm_Load(object sender, EventArgs e)
         {
-            serverSocketWork = new ServerSocketWork(); // 서버 단 소켓 관리를 하는 객채
+            
+            serverFileControl = new ServerFileControl();
+            serverSocketWork = new ServerSocketWork(serverFileControl); // 서버 단 소켓 관리를 하는 객채
 
             serverSocketWork.SocketOn(); // 서버 단 소켓 작업을 키는 함수 실행
 
             this.timer_stuListUpdate.Enabled = true;
+            this.timer_fileListUpdate.Enabled = true;
         }
 
         private void ProfessorUploadForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            serverFileControl.DeleteServerDirectory();
+
+            serverSocketWork.RequestSocketClose();
         }
 
         private void timer_stuListUpdate_Tick(object sender, EventArgs e)
@@ -57,6 +66,52 @@ namespace ClassBox
                 
             }
            
+        }
+
+        private void btn_fileUpload_Click(object sender, EventArgs e)
+        {
+            string filePath = "";
+            string fileName = "";
+
+
+            if (fileDlg_selectFile.ShowDialog() == DialogResult.OK){
+                filePath = fileDlg_selectFile.FileName;
+
+                fileName = serverFileControl.FileUpload(filePath);
+
+                MessageBox.Show("파일 업로드가 완료되었습니다.", "파일 업로드", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+        }
+
+        private MetroTile CreateFileTile(string fileName)
+        {
+            MetroTile tile = new MetroTile();
+
+            tile.Width = 141;
+            tile.Height = 86;
+
+            tile.Name = fileName;
+            tile.Text = fileName;
+
+            return tile;
+        }
+        
+        private void timer_fileListUpdate_Tick(object sender, EventArgs e)
+        {
+            int uploadedFileCount = this.panel_fileList.Controls.Count;
+
+            if(serverFileControl.FileList.Count != uploadedFileCount)
+            {
+                this.panel_fileList.Controls.Clear();
+
+                foreach(string fileName in serverFileControl.FileList.Keys)
+                {
+                    MetroTile newTile = CreateFileTile(fileName);
+
+                    this.panel_fileList.Controls.Add(newTile);
+                }
+            }
         }
     }
 }

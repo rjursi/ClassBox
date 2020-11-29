@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using System.Windows.Forms;
+
 namespace ClassBox
 {
     
@@ -19,10 +21,12 @@ namespace ClassBox
         private const int CLASSBOXPORT = 53278;
         private UserDTO userDTO;
         private ServerObject serverObject;
-        public ClientSocketWork(UserDTO userDTO)
+        private StudentDownloadForm stuForm;
+        public ClientSocketWork(UserDTO userDTO, StudentDownloadForm stuForm)
         {
            
-            this.userDTO = userDTO; 
+            this.userDTO = userDTO;
+            this.stuForm = stuForm;
         }
         
         public class ServerObject
@@ -47,12 +51,20 @@ namespace ClassBox
         public string ServerIP { get => this.serverIP; set => this.serverIP = value; }
         public void RequestRefresh()
         {
+            mainSocket.Send(Encoding.UTF8.GetBytes("requestFileList"));
             
         }
 
         public void RequestSocketClose()
         {
-            mainSocket.Send(Encoding.UTF8.GetBytes("exit"));
+            try
+            {
+                mainSocket.Send(Encoding.UTF8.GetBytes("exit"));
+            }catch (ObjectDisposedException)
+            {
+                Console.WriteLine("exception : 서버가 이미 종료되었음.");
+            }
+            
 
             mainSocket.Close();
         }
@@ -68,13 +80,28 @@ namespace ClassBox
                     // 비동기 데이터 읽기를 한번 끝냄
                     so.serverSocket.EndReceive(ar);
 
-                    if (Encoding.UTF8.GetString(so.buffer).Contains("info")) // 접속 요청 데이터 받기
+                    if (Encoding.UTF8.GetString(so.buffer).Contains("fileList")) // 접속 요청 데이터 받기
                     {
+                        string receivedFileList = Encoding.UTF8.GetString(so.buffer).Split('&')[1];
+                        Console.WriteLine("client : flieList Received : " + receivedFileList);
+                        stuForm.FileListRefresh(receivedFileList);
 
                     }
 
-                    so.ClearBuffer(); // 데이터 받았으니 버퍼 비움
+                    if (Encoding.UTF8.GetString(so.buffer).Contains("roomClose")) // 접속 요청 데이터 받기
+                    {
+                        so.ClearBuffer();
+                        so.serverSocket.Close();
 
+                        MessageBox.Show("해당 방은 종료되었습니다. 방에서 나가집니다.", "방 종료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // 클라이언트 방 없어졌다는 로직이 들어가야함
+
+                        stuForm.Invoke(new MethodInvoker(stuForm.Close));
+                        
+                        return;
+                    }
+
+                    so.ClearBuffer(); // 데이터 받았으니 버퍼 비움
 
                     // 다시 서버로부터 데이터 받기 대기
                     so.serverSocket.BeginReceive(serverObject.buffer, 0, serverObject.bufferSize, SocketFlags.None, AsyncReceiveCallback, so);
@@ -103,7 +130,7 @@ namespace ClassBox
 
                 mainSocket.Send(initSendData);
 
-                serverObject = new ServerObject(65536);
+                serverObject = new ServerObject(4096);
                 serverObject.serverSocket = mainSocket;
 
                 mainSocket.BeginReceive(serverObject.buffer, 0, serverObject.bufferSize, SocketFlags.None, AsyncReceiveCallback, serverObject);

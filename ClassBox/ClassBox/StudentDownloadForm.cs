@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 namespace ClassBox
 {
@@ -15,6 +16,10 @@ namespace ClassBox
         private UserDTO userDTO;
         private RoomDTO joinRoomDTO;
         private ClientSocketWork clientSocketWork;
+
+        public delegate void Delegate_FormClose();
+        public Delegate_FormClose delegate_FormClose;
+
 
         public StudentDownloadForm(UserDTO userDTO, RoomDTO joinRoomDTO)
         {
@@ -25,7 +30,7 @@ namespace ClassBox
 
         private void StudentDownloadForm_Load(object sender, EventArgs e)
         {
-            clientSocketWork = new ClientSocketWork(userDTO);
+            clientSocketWork = new ClientSocketWork(userDTO, this);
 
             clientSocketWork.ServerIP = joinRoomDTO.IpAddress; // 접속하고자 하는 방에 들어감
             clientSocketWork.SocketConnection();
@@ -34,9 +39,40 @@ namespace ClassBox
 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-
+            clientSocketWork.RequestRefresh();
         }
 
+
+        private MetroTile CreateFileTile(string fileName)
+        {
+            MetroTile tile = new MetroTile();
+
+            tile.Width = 141;
+            tile.Height = 86;
+
+            tile.Name = fileName;
+            tile.Text = fileName;
+
+            return tile;
+        }
+
+
+        public void FileListRefresh(string receivedFileList)
+        {
+            List<string> fileList = new List<string>();
+
+            string[] receivedFileNameArr = receivedFileList.Split(',');
+
+            fileList = receivedFileNameArr.ToList<string>();
+
+
+            foreach(string fileName in fileList)
+            {
+                MetroTile newTile = CreateFileTile(fileName);
+
+                this.panel_filelist.Controls.Add(newTile);
+            }
+        }
         private void StudentDownloadForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             clientSocketWork.RequestSocketClose();

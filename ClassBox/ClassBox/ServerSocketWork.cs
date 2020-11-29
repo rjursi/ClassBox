@@ -15,6 +15,8 @@ namespace ClassBox
         private Socket listener;
         private IPEndPoint endPoint;
         private const int CLASSBOXPORT = 53278;
+        private ServerFileControl serverFileControl;
+
         public class ClientObject
         {
             public Byte[] buffer;
@@ -45,12 +47,23 @@ namespace ClassBox
 
 
         public Dictionary<ClientObject, string> ClientsList { get => clientsList; }
-        public ServerSocketWork()
+        public ServerSocketWork(ServerFileControl serverFileControl)
         {
-            this.clientsList = new Dictionary<ClientObject, string>();    
+            this.clientsList = new Dictionary<ClientObject, string>();
             // 앞에는 클라이언트 소켓 객체, 뒤에는 학생 이름
+            this.serverFileControl = serverFileControl;
         }
-      
+        public void RequestSocketClose()
+        {
+            foreach(ClientObject clientObj in clientsList.Keys)
+            {
+                clientObj.clientSocket.Send(Encoding.UTF8.GetBytes("roomClose"));
+                
+            }
+
+            listener.Close();
+            Console.WriteLine(listener);
+        }
         public void SocketOn()
         {
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -86,6 +99,25 @@ namespace ClassBox
 
                     }
 
+                    if (Encoding.UTF8.GetString(co.buffer).Contains("requestFileList"))
+                    {
+                        string fileList = "";
+                        Console.WriteLine("server : requestFileList");
+                        if(serverFileControl.FileList.Count > 0)
+                        {
+                            foreach (string fileName in serverFileControl.FileList.Keys)
+                            {
+                                fileList += "fileList&";
+                                fileList += fileName;
+                                fileList += ',';
+                            }
+
+                            co.clientSocket.Send(Encoding.UTF8.GetBytes(fileList));
+
+                        }
+                        
+                    }
+
                     co.ClearBuffer(); // 데이터 받았으니 버퍼 비움
 
 
@@ -101,15 +133,26 @@ namespace ClassBox
 
         void AcceptCallback(IAsyncResult ar)
         {
-            Socket clientSocket = listener.EndAccept(ar); // 클라이언트 연결 요청 수락
+            try { 
+                Socket clientSocket = listener.EndAccept(ar); // 클라이언트 연결 요청 수락
+                listener.BeginAccept(AcceptCallback, null); // 또 다른 클라이언트 연결 수락
+                string address = clientSocket.RemoteEndPoint.ToString().Split(':')[0]; // 아이피 가져옴
+                ClientObject clientObject = new ClientObject(4096, clientSocket, address);
 
-            listener.BeginAccept(AcceptCallback, null); // 또 다른 클라이언트 연결 수락
-            string address = clientSocket.RemoteEndPoint.ToString().Split(':')[0]; // 아이피 가져옴
-            ClientObject clientObject = new ClientObject(32, clientSocket, address);
-          
 
-            clientObject.clientSocket.BeginReceive(clientObject.buffer, 0, clientObject.bufferSize, SocketFlags.None, AsyncReceiveCallback, clientObject);
+                clientObject.clientSocket.BeginReceive(clientObject.buffer, 0, clientObject.bufferSize, SocketFlags.None, AsyncReceiveCallback, clientObject);
+
+            }
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
+            
+            
+            
         }
+
+
 
     }
 }
