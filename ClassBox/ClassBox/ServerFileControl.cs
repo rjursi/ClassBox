@@ -20,7 +20,11 @@ namespace ClassBox
             Directory.Delete(uploadFolderPath, true);
         }
 
-
+        public void DeleteFile(string fileName)
+        {
+            File.Delete(Path.Combine(uploadFolderPath, fileName));
+            fileList.Remove(fileName);
+        }
         public ServerFileControl()
         {
             this.CreateServerFileFolder();

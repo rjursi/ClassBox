@@ -104,19 +104,19 @@ namespace ClassBox
                     {
                         string fileList = "";
                         Console.WriteLine("server : requestFileList");
-                        if(serverFileControl.FileList.Count > 0)
+                        fileList += "fileList&";
+                        if (serverFileControl.FileList.Count > 0)
                         {
                             foreach (string fileName in serverFileControl.FileList.Keys)
                             {
-                                fileList += "fileList&";
+                                
                                 fileList += fileName;
                                 fileList += ',';
                             }
-
-                            co.clientSocket.Send(Encoding.UTF8.GetBytes(fileList));
-
                         }
-                        
+                      
+                        co.clientSocket.Send(Encoding.UTF8.GetBytes(fileList));
+
                     }
 
                     co.ClearBuffer(); // 데이터 받았으니 버퍼 비움

@@ -94,9 +94,21 @@ namespace ClassBox
             tile.Name = fileName;
             tile.Text = fileName;
 
+            tile.Click += new EventHandler(this.tile_Click_fileDelete);
             return tile;
         }
-        
+        private void tile_Click_fileDelete(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("정말로 해당 파일을 삭제하시겠습니까?", "파일 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if(result == DialogResult.Yes)
+            {
+                Button file_tile = (MetroTile)sender;
+                Console.WriteLine(file_tile.Name);
+                this.serverFileControl.DeleteFile(file_tile.Name);
+                MessageBox.Show("파일이 삭제되었습니다.", "파일 삭제 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
         private void timer_fileListUpdate_Tick(object sender, EventArgs e)
         {
             int uploadedFileCount = this.panel_fileList.Controls.Count;
@@ -113,5 +125,7 @@ namespace ClassBox
                 }
             }
         }
+
+        
     }
 }

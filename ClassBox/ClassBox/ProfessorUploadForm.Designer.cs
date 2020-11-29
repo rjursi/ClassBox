@@ -33,10 +33,10 @@
             this.listbox_stuList = new System.Windows.Forms.ListBox();
             this.lbl_userList = new MetroFramework.Controls.MetroLabel();
             this.btn_fileUpload = new MetroFramework.Controls.MetroButton();
-            this.btn_fileDelete = new MetroFramework.Controls.MetroButton();
             this.timer_stuListUpdate = new System.Windows.Forms.Timer(this.components);
             this.fileDlg_selectFile = new System.Windows.Forms.OpenFileDialog();
             this.timer_fileListUpdate = new System.Windows.Forms.Timer(this.components);
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // panel_fileList
@@ -67,20 +67,12 @@
             // 
             // btn_fileUpload
             // 
-            this.btn_fileUpload.Location = new System.Drawing.Point(603, 86);
+            this.btn_fileUpload.Location = new System.Drawing.Point(736, 86);
             this.btn_fileUpload.Name = "btn_fileUpload";
             this.btn_fileUpload.Size = new System.Drawing.Size(125, 35);
             this.btn_fileUpload.TabIndex = 3;
             this.btn_fileUpload.Text = "파일 업로드";
             this.btn_fileUpload.Click += new System.EventHandler(this.btn_fileUpload_Click);
-            // 
-            // btn_fileDelete
-            // 
-            this.btn_fileDelete.Location = new System.Drawing.Point(734, 86);
-            this.btn_fileDelete.Name = "btn_fileDelete";
-            this.btn_fileDelete.Size = new System.Drawing.Size(127, 35);
-            this.btn_fileDelete.TabIndex = 3;
-            this.btn_fileDelete.Text = "파일 삭제";
             // 
             // timer_stuListUpdate
             // 
@@ -94,12 +86,21 @@
             // 
             this.timer_fileListUpdate.Tick += new System.EventHandler(this.timer_fileListUpdate_Tick);
             // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(200, 95);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(244, 19);
+            this.metroLabel1.TabIndex = 4;
+            this.metroLabel1.Text = "* 파일을 클릭하면 삭제가 가능합니다.";
+            // 
             // ProfessorUploadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 514);
-            this.Controls.Add(this.btn_fileDelete);
+            this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.btn_fileUpload);
             this.Controls.Add(this.lbl_userList);
             this.Controls.Add(this.listbox_stuList);
@@ -119,9 +120,9 @@
         private System.Windows.Forms.ListBox listbox_stuList;
         private MetroFramework.Controls.MetroLabel lbl_userList;
         private MetroFramework.Controls.MetroButton btn_fileUpload;
-        private MetroFramework.Controls.MetroButton btn_fileDelete;
         private System.Windows.Forms.Timer timer_stuListUpdate;
         private System.Windows.Forms.OpenFileDialog fileDlg_selectFile;
         private System.Windows.Forms.Timer timer_fileListUpdate;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }
