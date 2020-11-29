@@ -12,8 +12,7 @@ namespace ClassBox
     
     class ClientSocketWork
     {
-        private bool isFirst;
-        
+       
         private Socket mainSocket; 
         private IPEndPoint endPoint;
         private string serverIP;
@@ -84,7 +83,11 @@ namespace ClassBox
                     {
                         string receivedFileList = Encoding.UTF8.GetString(so.buffer).Split('&')[1];
                         Console.WriteLine("client : flieList Received : " + receivedFileList);
-                        stuForm.FileListRefresh(receivedFileList);
+                        stuForm.Invoke(
+                            (MethodInvoker)delegate {
+                                stuForm.FileListRefresh(receivedFileList);
+                            }
+                        );
 
                     }
 
@@ -116,7 +119,7 @@ namespace ClassBox
         public void SocketConnection()
         {
             
-            isFirst = true; // 
+           
 
            
             try
@@ -129,10 +132,11 @@ namespace ClassBox
                 initSendData = Encoding.UTF8.GetBytes($"info&{userDTO.Name}");
 
                 mainSocket.Send(initSendData);
-
+                mainSocket.Receive(new byte[32]); // 학생 정보를 받았다는 것을 받기 위한 임시 byte
                 serverObject = new ServerObject(4096);
                 serverObject.serverSocket = mainSocket;
 
+                this.RequestRefresh();
                 mainSocket.BeginReceive(serverObject.buffer, 0, serverObject.bufferSize, SocketFlags.None, AsyncReceiveCallback, serverObject);
                
             }

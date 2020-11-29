@@ -73,7 +73,6 @@ namespace ClassBox
         {
 
 
-            
             createConnection();
 
             comm.CommandText = "SELECT MAX(no) FROM room";
@@ -85,10 +84,7 @@ namespace ClassBox
                 while (myReader.Read())
                 {
                     maxRoomno = (myReader.IsDBNull(0)) ? 1 : Int32.Parse(myReader["MAX(no)"].ToString());
-
-
                 }
-
 
             } // 방 번호 할당
 

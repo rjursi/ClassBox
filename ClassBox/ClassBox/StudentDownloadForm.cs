@@ -62,15 +62,20 @@ namespace ClassBox
             List<string> fileList = new List<string>();
 
             string[] receivedFileNameArr = receivedFileList.Split(',');
-
+            int arrCnt = receivedFileNameArr.Length - 1;
             fileList = receivedFileNameArr.ToList<string>();
 
 
+            this.panel_filelist.Controls.Clear();
             foreach(string fileName in fileList)
             {
-                MetroTile newTile = CreateFileTile(fileName);
+                int index = fileList.IndexOf(fileName);
+                if (index != arrCnt)
+                {
+                    MetroTile newTile = CreateFileTile(fileName);
 
-                this.panel_filelist.Controls.Add(newTile);
+                    this.panel_filelist.Controls.Add(newTile);
+                }
             }
         }
         private void StudentDownloadForm_FormClosing(object sender, FormClosingEventArgs e)

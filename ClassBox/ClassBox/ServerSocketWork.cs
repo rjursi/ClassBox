@@ -91,15 +91,16 @@ namespace ClassBox
 
                         return;
                     }
-                    if (Encoding.UTF8.GetString(co.buffer).Contains("info")) // 접속 요청 데이터 받기
+                    else if (Encoding.UTF8.GetString(co.buffer).Contains("info")) // 접속 요청 데이터 받기
                     {
                         string receivedStuInfo = Encoding.UTF8.GetString(co.buffer);
 
                         clientsList.Add(co, receivedStuInfo.Split('&')[1]);
+                        co.clientSocket.Send(Encoding.UTF8.GetBytes("infoReceived"));
 
                     }
 
-                    if (Encoding.UTF8.GetString(co.buffer).Contains("requestFileList"))
+                    else if (Encoding.UTF8.GetString(co.buffer).Contains("requestFileList"))
                     {
                         string fileList = "";
                         Console.WriteLine("server : requestFileList");
