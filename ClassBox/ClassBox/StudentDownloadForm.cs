@@ -17,6 +17,7 @@ namespace ClassBox
         private RoomDTO joinRoomDTO;
         private ClientSocketWork clientSocketWork;
 
+        public FileDownloadForm fileDownloadForm;
         public delegate void Delegate_FormClose();
         public Delegate_FormClose delegate_FormClose;
 
@@ -34,14 +35,9 @@ namespace ClassBox
 
             clientSocketWork.ServerIP = joinRoomDTO.IpAddress; // 접속하고자 하는 방에 들어감
             clientSocketWork.SocketConnection();
-            
-        }
 
-        private void btn_refresh_Click(object sender, EventArgs e)
-        {
-            clientSocketWork.RequestRefresh();
+            this.timer_fileListRefresh.Enabled = true;
         }
-
 
         private MetroTile CreateFileTile(string fileName)
         {
@@ -53,9 +49,40 @@ namespace ClassBox
             tile.Name = fileName;
             tile.Text = fileName;
 
+            tile.Click += new EventHandler(this.fileDownload);
             return tile;
         }
 
+        private void fileDownload(object sender, EventArgs e)
+        {
+            Button tileButton = (MetroTile)sender;
+
+            
+            var result = MessageBox.Show("해당 파일을 다운로드 하시겠습니까?", "파일 다운로드", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if(result == DialogResult.Yes)
+            {
+               
+                SaveFileDialog fileDlg_save = new SaveFileDialog();
+                fileDlg_save.Title = "파일 저장";
+
+                var fileDlgResult = fileDlg_save.ShowDialog();
+                
+                
+                if(fileDlgResult == DialogResult.OK)
+                {
+                    
+                    this.fileDownloadForm = new FileDownloadForm(this.clientSocketWork, tileButton.Name, fileDlg_save.FileName, this);
+                    
+                    fileDownloadForm.ShowDialog();
+
+                    MessageBox.Show("파일 다운로드가 완료되었습니다.", "파일 다운로드 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                
+                
+                
+            }
+        }
 
         public void FileListRefresh(string receivedFileList)
         {
@@ -65,22 +92,29 @@ namespace ClassBox
             int arrCnt = receivedFileNameArr.Length - 1;
             fileList = receivedFileNameArr.ToList<string>();
 
-
-            this.panel_filelist.Controls.Clear();
-            foreach(string fileName in fileList)
+            if(this.panel_filelist.Controls.Count != arrCnt)
             {
-                int index = fileList.IndexOf(fileName);
-                if (index != arrCnt)
+                this.panel_filelist.Controls.Clear();
+                foreach (string fileName in fileList)
                 {
-                    MetroTile newTile = CreateFileTile(fileName);
+                    int index = fileList.IndexOf(fileName);
+                    if (index != arrCnt)
+                    {
+                        MetroTile newTile = CreateFileTile(fileName);
 
-                    this.panel_filelist.Controls.Add(newTile);
+                        this.panel_filelist.Controls.Add(newTile);
+                    }
                 }
             }
         }
         private void StudentDownloadForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             clientSocketWork.RequestSocketClose();
+        }
+
+        private void timer_fileListRefresh_Tick(object sender, EventArgs e)
+        { 
+            clientSocketWork.RequestRefresh();
         }
     }
 }

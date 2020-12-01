@@ -117,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientFileControl.cs" />
     <Compile Include="ClientSocketWork.cs" />
     <Compile Include="CreateRoom.cs">
       <SubType>Form</SubType>
@@ -128,6 +129,12 @@
     <Compile Include="DAO\RoomDAO.cs" />
     <Compile Include="DTO\RoomDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="FileDownloadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileDownloadForm.Designer.cs">
+      <DependentUpon>FileDownloadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +172,9 @@
     </Compile>
     <EmbeddedResource Include="CreateRoom.resx">
       <DependentUpon>CreateRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileDownloadForm.resx">
+      <DependentUpon>FileDownloadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

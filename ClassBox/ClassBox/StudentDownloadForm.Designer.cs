@@ -28,25 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_refresh = new MetroFramework.Controls.MetroButton();
+            this.components = new System.ComponentModel.Container();
             this.panel_filelist = new System.Windows.Forms.FlowLayoutPanel();
+            this.timer_fileListRefresh = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // btn_refresh
-            // 
-            this.btn_refresh.Location = new System.Drawing.Point(722, 63);
-            this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(112, 47);
-            this.btn_refresh.TabIndex = 0;
-            this.btn_refresh.Text = "목록 새로고침";
-            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // panel_filelist
             // 
-            this.panel_filelist.Location = new System.Drawing.Point(23, 127);
+            this.panel_filelist.Location = new System.Drawing.Point(23, 81);
             this.panel_filelist.Name = "panel_filelist";
-            this.panel_filelist.Size = new System.Drawing.Size(811, 366);
+            this.panel_filelist.Size = new System.Drawing.Size(811, 412);
             this.panel_filelist.TabIndex = 1;
+            // 
+            // timer_fileListRefresh
+            // 
+            this.timer_fileListRefresh.Interval = 500;
+            this.timer_fileListRefresh.Tick += new System.EventHandler(this.timer_fileListRefresh_Tick);
             // 
             // StudentDownloadForm
             // 
@@ -54,7 +51,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(857, 527);
             this.Controls.Add(this.panel_filelist);
-            this.Controls.Add(this.btn_refresh);
             this.Name = "StudentDownloadForm";
             this.Text = "파일 다운로드";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentDownloadForm_FormClosing);
@@ -64,8 +60,7 @@
         }
 
         #endregion
-
-        private MetroFramework.Controls.MetroButton btn_refresh;
         private System.Windows.Forms.FlowLayoutPanel panel_filelist;
+        public System.Windows.Forms.Timer timer_fileListRefresh;
     }
 }
