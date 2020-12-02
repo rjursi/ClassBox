@@ -78,7 +78,9 @@
             this.Controls.Add(this.lbl_persent);
             this.Controls.Add(this.lbl_persentNum);
             this.Controls.Add(this.progressbar_download);
+            this.MaximizeBox = false;
             this.Name = "FileDownloadForm";
+            this.Resizable = false;
             this.Text = "파일 다운로드";
             this.Load += new System.EventHandler(this.FileDownloadForm_Load);
             this.ResumeLayout(false);

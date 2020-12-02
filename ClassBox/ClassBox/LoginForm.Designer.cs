@@ -99,7 +99,9 @@
             this.Controls.Add(this.lbl_password);
             this.Controls.Add(this.txtbox_id);
             this.Controls.Add(this.lbl_id);
+            this.MinimizeBox = false;
             this.Name = "LoginForm";
+            this.Resizable = false;
             this.Text = " 로그인";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
             this.ResumeLayout(false);

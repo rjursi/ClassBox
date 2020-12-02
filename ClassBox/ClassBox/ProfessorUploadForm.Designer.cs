@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel_fileList = new System.Windows.Forms.FlowLayoutPanel();
+            this.scrollbar_fileList = new MetroFramework.Controls.MetroScrollBar();
             this.listbox_stuList = new System.Windows.Forms.ListBox();
             this.lbl_userList = new MetroFramework.Controls.MetroLabel();
             this.btn_fileUpload = new MetroFramework.Controls.MetroButton();
@@ -37,22 +38,40 @@
             this.fileDlg_selectFile = new System.Windows.Forms.OpenFileDialog();
             this.timer_fileListUpdate = new System.Windows.Forms.Timer(this.components);
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.panel_fileList.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_fileList
             // 
-            this.panel_fileList.Location = new System.Drawing.Point(200, 127);
+            this.panel_fileList.AllowDrop = true;
+            this.panel_fileList.AutoScroll = true;
+            this.panel_fileList.Controls.Add(this.scrollbar_fileList);
+            this.panel_fileList.Location = new System.Drawing.Point(176, 127);
             this.panel_fileList.Name = "panel_fileList";
-            this.panel_fileList.Size = new System.Drawing.Size(661, 364);
+            this.panel_fileList.Size = new System.Drawing.Size(680, 364);
             this.panel_fileList.TabIndex = 0;
+            this.panel_fileList.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel_fileList_DragDrop);
+            this.panel_fileList.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel_fileList_DragEnter);
+            this.panel_fileList.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_fileList_Paint);
+            // 
+            // scrollbar_fileList
+            // 
+            this.scrollbar_fileList.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.scrollbar_fileList.Location = new System.Drawing.Point(3, 3);
+            this.scrollbar_fileList.Name = "scrollbar_fileList";
+            this.scrollbar_fileList.Orientation = MetroFramework.Controls.MetroScrollOrientation.Horizontal;
+            this.scrollbar_fileList.ScrollbarSize = 2;
+            this.scrollbar_fileList.Size = new System.Drawing.Size(200, 2);
+            this.scrollbar_fileList.TabIndex = 0;
             // 
             // listbox_stuList
             // 
+            this.listbox_stuList.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.listbox_stuList.FormattingEnabled = true;
-            this.listbox_stuList.ItemHeight = 12;
+            this.listbox_stuList.ItemHeight = 21;
             this.listbox_stuList.Location = new System.Drawing.Point(23, 127);
             this.listbox_stuList.Name = "listbox_stuList";
-            this.listbox_stuList.Size = new System.Drawing.Size(162, 364);
+            this.listbox_stuList.Size = new System.Drawing.Size(147, 361);
             this.listbox_stuList.TabIndex = 1;
             // 
             // lbl_userList
@@ -67,11 +86,13 @@
             // 
             // btn_fileUpload
             // 
-            this.btn_fileUpload.Location = new System.Drawing.Point(736, 86);
+            this.btn_fileUpload.Location = new System.Drawing.Point(767, 86);
             this.btn_fileUpload.Name = "btn_fileUpload";
-            this.btn_fileUpload.Size = new System.Drawing.Size(125, 35);
+            this.btn_fileUpload.Size = new System.Drawing.Size(89, 35);
+            this.btn_fileUpload.Style = MetroFramework.MetroColorStyle.Lime;
             this.btn_fileUpload.TabIndex = 3;
             this.btn_fileUpload.Text = "파일 업로드";
+            this.btn_fileUpload.Theme = MetroFramework.MetroThemeStyle.Light;
             this.btn_fileUpload.Click += new System.EventHandler(this.btn_fileUpload_Click);
             // 
             // timer_stuListUpdate
@@ -99,16 +120,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 514);
+            this.ClientSize = new System.Drawing.Size(879, 514);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.btn_fileUpload);
             this.Controls.Add(this.lbl_userList);
             this.Controls.Add(this.listbox_stuList);
             this.Controls.Add(this.panel_fileList);
+            this.MaximizeBox = false;
             this.Name = "ProfessorUploadForm";
+            this.Resizable = false;
             this.Text = "파일 공유 관리";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfessorUploadForm_FormClosing);
             this.Load += new System.EventHandler(this.ProfessorUploadForm_Load);
+            this.panel_fileList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,5 +148,6 @@
         private System.Windows.Forms.OpenFileDialog fileDlg_selectFile;
         private System.Windows.Forms.Timer timer_fileListUpdate;
         private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroScrollBar scrollbar_fileList;
     }
 }

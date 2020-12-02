@@ -64,8 +64,10 @@ namespace ClassBox
             {
                
                 SaveFileDialog fileDlg_save = new SaveFileDialog();
-                fileDlg_save.Title = "파일 저장";
 
+                fileDlg_save.Title = "파일 저장";
+                fileDlg_save.FileName = tileButton.Name;
+                fileDlg_save.Filter = "모든 파일(*.*)|*.*";
                 var fileDlgResult = fileDlg_save.ShowDialog();
                 
                 

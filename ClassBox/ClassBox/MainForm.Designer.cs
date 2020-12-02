@@ -90,7 +90,9 @@
             this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.roomListPanel);
             this.Controls.Add(this.btn_createRoom);
+            this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.Resizable = false;
             this.Text = "방 목록";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);

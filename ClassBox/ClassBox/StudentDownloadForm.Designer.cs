@@ -51,6 +51,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(857, 527);
             this.Controls.Add(this.panel_filelist);
+            this.MaximizeBox = false;
             this.Name = "StudentDownloadForm";
             this.Text = "파일 다운로드";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentDownloadForm_FormClosing);

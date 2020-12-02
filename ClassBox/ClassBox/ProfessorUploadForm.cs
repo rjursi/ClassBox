@@ -126,6 +126,28 @@ namespace ClassBox
             }
         }
 
-        
+        private void panel_fileList_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string filepath in files)
+            {
+                serverFileControl.FileUpload(filepath);
+            }
+
+            MessageBox.Show("파일 업로드가 완료되었습니다.", "파일 업로드", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void panel_fileList_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void panel_fileList_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

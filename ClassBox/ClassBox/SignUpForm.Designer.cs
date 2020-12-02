@@ -160,7 +160,9 @@
             this.Controls.Add(this.lbl_password);
             this.Controls.Add(this.txtbox_id);
             this.Controls.Add(this.lbl_id);
+            this.MaximizeBox = false;
             this.Name = "SignUpForm";
+            this.Resizable = false;
             this.Text = "회원가입";
             this.panel_userType.ResumeLayout(false);
             this.panel_userType.PerformLayout();

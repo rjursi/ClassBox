@@ -66,6 +66,7 @@
             this.Controls.Add(this.btn_createRoom);
             this.Controls.Add(this.txtbox_roomName);
             this.Controls.Add(this.lbl_roomName);
+            this.MaximizeBox = false;
             this.Name = "CreateRoom";
             this.Text = "방 생성";
             this.ResumeLayout(false);
