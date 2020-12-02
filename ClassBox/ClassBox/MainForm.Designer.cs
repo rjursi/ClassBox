@@ -37,7 +37,7 @@
             // 
             // btn_createRoom
             // 
-            this.btn_createRoom.Location = new System.Drawing.Point(660, 114);
+            this.btn_createRoom.Location = new System.Drawing.Point(660, 102);
             this.btn_createRoom.Name = "btn_createRoom";
             this.btn_createRoom.Size = new System.Drawing.Size(117, 32);
             this.btn_createRoom.TabIndex = 2;
@@ -47,14 +47,15 @@
             // 
             // roomListPanel
             // 
-            this.roomListPanel.Location = new System.Drawing.Point(40, 152);
+            this.roomListPanel.AutoScroll = true;
+            this.roomListPanel.Location = new System.Drawing.Point(23, 152);
             this.roomListPanel.Name = "roomListPanel";
-            this.roomListPanel.Size = new System.Drawing.Size(737, 275);
+            this.roomListPanel.Size = new System.Drawing.Size(754, 275);
             this.roomListPanel.TabIndex = 3;
             // 
             // btn_Logout
             // 
-            this.btn_Logout.Location = new System.Drawing.Point(702, 72);
+            this.btn_Logout.Location = new System.Drawing.Point(702, 63);
             this.btn_Logout.Name = "btn_Logout";
             this.btn_Logout.Size = new System.Drawing.Size(75, 23);
             this.btn_Logout.TabIndex = 4;
@@ -64,7 +65,7 @@
             // lbl_username
             // 
             this.lbl_username.AutoSize = true;
-            this.lbl_username.Location = new System.Drawing.Point(610, 43);
+            this.lbl_username.Location = new System.Drawing.Point(607, 26);
             this.lbl_username.Name = "lbl_username";
             this.lbl_username.Size = new System.Drawing.Size(82, 19);
             this.lbl_username.TabIndex = 5;
@@ -73,7 +74,7 @@
             // 
             // btn_refreshRoom
             // 
-            this.btn_refreshRoom.Location = new System.Drawing.Point(543, 114);
+            this.btn_refreshRoom.Location = new System.Drawing.Point(23, 102);
             this.btn_refreshRoom.Name = "btn_refreshRoom";
             this.btn_refreshRoom.Size = new System.Drawing.Size(111, 32);
             this.btn_refreshRoom.TabIndex = 6;

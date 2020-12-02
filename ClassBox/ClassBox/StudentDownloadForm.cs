@@ -39,20 +39,98 @@ namespace ClassBox
             this.timer_fileListRefresh.Enabled = true;
         }
 
-        private MetroTile CreateFileTile(string fileName)
+        private MetroPanel CreateFileTile(string fileName)
         {
+
+            MetroPanel mPanel = new MetroPanel();
+
+            
+            mPanel.Width = 143;
+            mPanel.Height = 88;
+
+            int label_x = mPanel.Width - (mPanel.Width / 3);
+            int label_y = mPanel.Height - (mPanel.Height / 3);
+
             MetroTile tile = new MetroTile();
 
             tile.Width = 141;
             tile.Height = 86;
 
+            MetroLabel mLabel = new MetroLabel();
+            mLabel.Text = fileName.Split('.')[1].ToUpper();
+            mLabel.Location = new Point(label_x, label_y);
+            mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
+            
             tile.Name = fileName;
-            tile.Text = fileName;
+            tile.Text = fileName.Split('.')[0];
+            tile.TextAlign = ContentAlignment.TopLeft;
+
+            
+            tile.Style = this.StylePicker(mLabel.Text);
+            mPanel.Controls.Add(tile);
+            mPanel.Controls.Add(mLabel);
+            mLabel.BringToFront();
 
             tile.Click += new EventHandler(this.fileDownload);
-            return tile;
-        }
+            tile.MouseHover += new EventHandler(this.tile_MouseHover_toolTip);
+         
 
+            
+            return mPanel;
+        }
+        private void tile_MouseHover_toolTip(object sender, EventArgs e)
+        {
+            Button tile = (MetroTile)sender;
+            this.tooltip_filename.ToolTipTitle = "파일명";
+            this.tooltip_filename.IsBalloon = true;
+            this.tooltip_filename.SetToolTip(tile, tile.Name);
+        }
+        private MetroFramework.MetroColorStyle StylePicker(string ext)
+        {
+            MetroFramework.MetroColorStyle colorNo;
+            switch (ext)
+            {
+                case "PNG":
+                    colorNo = MetroFramework.MetroColorStyle.Lime;
+                    break;
+                case "PDF":
+                    colorNo = MetroFramework.MetroColorStyle.Red;
+                    break;
+                case "JPG":
+                    colorNo = MetroFramework.MetroColorStyle.Lime;
+                    break;
+                case "JPEG":
+                    colorNo = MetroFramework.MetroColorStyle.Lime;
+                    break;
+                case "EXE":
+                    colorNo = MetroFramework.MetroColorStyle.Green;
+                    break;
+                case "HWP":
+                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                    break;
+                case "WORD":
+                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                    break;
+                case "XLSX":
+                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                    break;
+                case "PPT":
+                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                    break;
+                case "MP3":
+                    colorNo = MetroFramework.MetroColorStyle.Purple;
+                    break;
+                case "MP4":
+                    colorNo = MetroFramework.MetroColorStyle.Purple;
+                    break;
+                default:
+                    colorNo = MetroFramework.MetroColorStyle.Silver;
+                    break;
+            }
+
+
+            return colorNo;
+        }
         private void fileDownload(object sender, EventArgs e)
         {
             Button tileButton = (MetroTile)sender;
@@ -102,9 +180,9 @@ namespace ClassBox
                     int index = fileList.IndexOf(fileName);
                     if (index != arrCnt)
                     {
-                        MetroTile newTile = CreateFileTile(fileName);
+                        MetroPanel newTilePanel = CreateFileTile(fileName);
 
-                        this.panel_filelist.Controls.Add(newTile);
+                        this.panel_filelist.Controls.Add(newTilePanel);
                     }
                 }
             }

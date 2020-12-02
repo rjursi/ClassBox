@@ -31,13 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.panel_filelist = new System.Windows.Forms.FlowLayoutPanel();
             this.timer_fileListRefresh = new System.Windows.Forms.Timer(this.components);
+            this.tooltip_filename = new MetroFramework.Components.MetroToolTip();
             this.SuspendLayout();
             // 
             // panel_filelist
             // 
             this.panel_filelist.Location = new System.Drawing.Point(23, 81);
             this.panel_filelist.Name = "panel_filelist";
-            this.panel_filelist.Size = new System.Drawing.Size(811, 412);
+            this.panel_filelist.Size = new System.Drawing.Size(786, 412);
             this.panel_filelist.TabIndex = 1;
             // 
             // timer_fileListRefresh
@@ -49,7 +50,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 527);
+            this.ClientSize = new System.Drawing.Size(833, 527);
             this.Controls.Add(this.panel_filelist);
             this.MaximizeBox = false;
             this.Name = "StudentDownloadForm";
@@ -63,5 +64,6 @@
         #endregion
         private System.Windows.Forms.FlowLayoutPanel panel_filelist;
         public System.Windows.Forms.Timer timer_fileListRefresh;
+        private MetroFramework.Components.MetroToolTip tooltip_filename;
     }
 }

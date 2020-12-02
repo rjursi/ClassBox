@@ -17,8 +17,8 @@ namespace ClassBox
     {
        
         UserDTO userDTO; // 여기서 Accessno 에 따라 할 수 있는 역할이 달라짐
-        
 
+        
 
         public MainForm()
         {
@@ -105,6 +105,7 @@ namespace ClassBox
                 tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
 
                 tile.Text = roomDTO.Name;
+                tile.TextAlign = ContentAlignment.TopLeft;
 
                 tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
                 this.roomListPanel.Controls.Add(tile);

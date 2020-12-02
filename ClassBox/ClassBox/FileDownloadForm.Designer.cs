@@ -31,7 +31,6 @@
             this.progressbar_download = new MetroFramework.Controls.MetroProgressBar();
             this.lbl_persentNum = new MetroFramework.Controls.MetroLabel();
             this.lbl_persent = new MetroFramework.Controls.MetroLabel();
-            this.lbl_filename = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // progressbar_download
@@ -61,20 +60,11 @@
             this.lbl_persent.Text = "%";
             this.lbl_persent.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lbl_filename
-            // 
-            this.lbl_filename.AutoSize = true;
-            this.lbl_filename.Location = new System.Drawing.Point(23, 86);
-            this.lbl_filename.Name = "lbl_filename";
-            this.lbl_filename.Size = new System.Drawing.Size(0, 0);
-            this.lbl_filename.TabIndex = 3;
-            // 
             // FileDownloadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 179);
-            this.Controls.Add(this.lbl_filename);
             this.Controls.Add(this.lbl_persent);
             this.Controls.Add(this.lbl_persentNum);
             this.Controls.Add(this.progressbar_download);
@@ -93,6 +83,5 @@
         private MetroFramework.Controls.MetroProgressBar progressbar_download;
         private MetroFramework.Controls.MetroLabel lbl_persentNum;
         private MetroFramework.Controls.MetroLabel lbl_persent;
-        private MetroFramework.Controls.MetroLabel lbl_filename;
     }
 }
