@@ -17,9 +17,6 @@ namespace ClassBox
     {
        
         UserDTO userDTO; // 여기서 Accessno 에 따라 할 수 있는 역할이 달라짐
-        
-
-
         public MainForm()
         {
             InitializeComponent();
