@@ -38,7 +38,7 @@
             // 
             this.panel_filelist.Location = new System.Drawing.Point(23, 81);
             this.panel_filelist.Name = "panel_filelist";
-            this.panel_filelist.Size = new System.Drawing.Size(786, 412);
+            this.panel_filelist.Size = new System.Drawing.Size(934, 412);
             this.panel_filelist.TabIndex = 1;
             // 
             // timer_fileListRefresh
@@ -50,7 +50,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 527);
+            this.ClientSize = new System.Drawing.Size(980, 527);
             this.Controls.Add(this.panel_filelist);
             this.MaximizeBox = false;
             this.Name = "StudentDownloadForm";

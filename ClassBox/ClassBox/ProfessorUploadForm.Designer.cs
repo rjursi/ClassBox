@@ -39,6 +39,7 @@
             this.timer_fileListUpdate = new System.Windows.Forms.Timer(this.components);
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tooltip_filename = new MetroFramework.Components.MetroToolTip();
+            this.metroUserControl1 = new MetroFramework.Controls.MetroUserControl();
             this.panel_fileList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.panel_fileList.Controls.Add(this.scrollbar_fileList);
             this.panel_fileList.Location = new System.Drawing.Point(176, 127);
             this.panel_fileList.Name = "panel_fileList";
-            this.panel_fileList.Size = new System.Drawing.Size(773, 364);
+            this.panel_fileList.Size = new System.Drawing.Size(898, 361);
             this.panel_fileList.TabIndex = 0;
             this.panel_fileList.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel_fileList_DragDrop);
             this.panel_fileList.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel_fileList_DragEnter);
@@ -57,12 +58,17 @@
             // scrollbar_fileList
             // 
             this.scrollbar_fileList.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.scrollbar_fileList.LargeChange = 10;
             this.scrollbar_fileList.Location = new System.Drawing.Point(3, 3);
+            this.scrollbar_fileList.Maximum = 100;
+            this.scrollbar_fileList.Minimum = 0;
+            this.scrollbar_fileList.MouseWheelBarPartitions = 10;
             this.scrollbar_fileList.Name = "scrollbar_fileList";
             this.scrollbar_fileList.Orientation = MetroFramework.Controls.MetroScrollOrientation.Horizontal;
             this.scrollbar_fileList.ScrollbarSize = 2;
             this.scrollbar_fileList.Size = new System.Drawing.Size(200, 2);
             this.scrollbar_fileList.TabIndex = 0;
+            this.scrollbar_fileList.UseSelectable = true;
             // 
             // listbox_stuList
             // 
@@ -86,13 +92,14 @@
             // 
             // btn_fileUpload
             // 
-            this.btn_fileUpload.Location = new System.Drawing.Point(832, 86);
+            this.btn_fileUpload.Location = new System.Drawing.Point(943, 86);
             this.btn_fileUpload.Name = "btn_fileUpload";
             this.btn_fileUpload.Size = new System.Drawing.Size(89, 35);
             this.btn_fileUpload.Style = MetroFramework.MetroColorStyle.Lime;
             this.btn_fileUpload.TabIndex = 3;
             this.btn_fileUpload.Text = "파일 업로드";
             this.btn_fileUpload.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.btn_fileUpload.UseSelectable = true;
             this.btn_fileUpload.Click += new System.EventHandler(this.btn_fileUpload_Click);
             // 
             // timer_stuListUpdate
@@ -116,11 +123,26 @@
             this.metroLabel1.TabIndex = 4;
             this.metroLabel1.Text = "* 파일을 클릭하면 삭제가 가능합니다.";
             // 
+            // tooltip_filename
+            // 
+            this.tooltip_filename.Style = MetroFramework.MetroColorStyle.Blue;
+            this.tooltip_filename.StyleManager = null;
+            this.tooltip_filename.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // metroUserControl1
+            // 
+            this.metroUserControl1.Location = new System.Drawing.Point(354, 61);
+            this.metroUserControl1.Name = "metroUserControl1";
+            this.metroUserControl1.Size = new System.Drawing.Size(8, 8);
+            this.metroUserControl1.TabIndex = 5;
+            this.metroUserControl1.UseSelectable = true;
+            // 
             // ProfessorUploadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(972, 514);
+            this.ClientSize = new System.Drawing.Size(1097, 514);
+            this.Controls.Add(this.metroUserControl1);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.btn_fileUpload);
             this.Controls.Add(this.lbl_userList);
@@ -150,5 +172,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroScrollBar scrollbar_fileList;
         private MetroFramework.Components.MetroToolTip tooltip_filename;
+        private MetroFramework.Controls.MetroUserControl metroUserControl1;
     }
 }

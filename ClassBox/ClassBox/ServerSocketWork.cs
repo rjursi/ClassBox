@@ -106,7 +106,7 @@ namespace ClassBox
                         fileList += "fileList&";
                         if (serverFileControl.FileList.Count > 0)
                         {
-                            foreach (string fileName in serverFileControl.FileList.Keys)
+                            foreach (string fileName in serverFileControl.FileList.Values)
                             {
                                 
                                 fileList += fileName;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
-
+using System.IO;
 
 namespace ClassBox
 {
@@ -84,37 +84,78 @@ namespace ClassBox
             }
         }
 
+
+        private readonly string[] SizeSuffixes =
+                   { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        private string SizeSuffix(Int64 value, int decimalPlaces = 1)
+        {
+            if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
+            if (value < 0) { return "-" + SizeSuffix(-value); }
+            if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} B", 0); }
+
+            // mag is 0 for bytes, 1 for KB, 2, for MB, etc.
+            int mag = (int)Math.Log(value, 1024);
+
+            // 1L << (mag * 10) == 2 ^ (10 * mag) 
+            // [i.e. the number of bytes in the unit corresponding to mag]
+            decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+
+            // make adjustment when the value is large enough that
+            // it would round up to 1000 or more
+            if (Math.Round(adjustedSize, decimalPlaces) >= 1000)
+            {
+                mag += 1;
+                adjustedSize /= 1024;
+            }
+
+            return string.Format("{0:n" + decimalPlaces + "} {1}",
+                adjustedSize,
+                SizeSuffixes[mag]);
+        }
+
         private MetroPanel CreateFileTile(string fileName)
         {
-
+            FileInfo fInfo = new FileInfo(fileName);
+            
             MetroPanel mPanel = new MetroPanel();
-
-            
-            mPanel.Width = 143;
-            mPanel.Height = 88;
-
-            int label_x = mPanel.Width - (mPanel.Width / 3);
-            int label_y = mPanel.Height - (mPanel.Height / 3);
-
             MetroTile tile = new MetroTile();
+            MetroLabel mLabel = new MetroLabel(); // 파일명
+            MetroLabel mSize = new MetroLabel(); // 용량
 
-            tile.Width = 141;
-            tile.Height = 86;
 
-            MetroLabel mLabel = new MetroLabel();
-            mLabel.Text = fileName.Split('.')[1].ToUpper();
-            mLabel.Location = new Point(label_x, label_y);
-            mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
+            mPanel.Width = 170;
+            mPanel.Height = 105;
+
             
-            tile.Name = fileName;
-            tile.Text = fileName.Split('.')[0];
+            tile.Width = 151;
+            tile.Height = 96;
+
+            int label_x = tile.Width - (tile.Width / 3);
+            int extLabel_x = label_x - (tile.Width / 3) * 2;
+            int label_y = tile.Height - (tile.Height / 3);
+            int extLabel_y = label_y - (tile.Height / 3);
+
+            tile.Text = Path.GetExtension(fInfo.FullName).Replace(".", "").ToUpper();
+
+            mLabel.Text = Path.GetFileNameWithoutExtension(fileName);
+            mLabel.Location = new Point(extLabel_x, extLabel_y);
+            mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
+            mLabel.Style = this.StylePicker(tile.Text);
+           
+            mSize.Text = SizeSuffix(fInfo.Length);
+            mSize.Location = new Point(label_x, label_y);
+            mSize.Style = this.StylePicker(tile.Text);
+            tile.Name = fInfo.Name;
+            
             tile.TextAlign = ContentAlignment.TopLeft;
 
             
-            tile.Style = this.StylePicker(mLabel.Text);
+            tile.Style = this.StylePicker(tile.Text);
+            
             mPanel.Controls.Add(tile);
-            mPanel.Controls.Add(mLabel);
-            mLabel.BringToFront();
+            tile.Controls.Add(mLabel);
+            tile.Controls.Add(mSize);
+            
 
             tile.Click += new EventHandler(this.tile_Click_fileDelete);
             tile.MouseHover += new EventHandler(this.tile_MouseHover_toolTip);
@@ -128,41 +169,52 @@ namespace ClassBox
             MetroFramework.MetroColorStyle colorNo;
             switch (ext)
             {
+                case "JAVA":
+                case "JSP":
+                    colorNo = MetroFramework.MetroColorStyle.JAVAnJSP;
+                    break;    
+                
+                 
                 case "PNG":
-                    colorNo = MetroFramework.MetroColorStyle.Lime;
-                    break;
                 case "JPG":
-                    colorNo = MetroFramework.MetroColorStyle.Lime;
+                case "GIF":
+                    colorNo = MetroFramework.MetroColorStyle.PNGnJPGnGIF;
                     break;
                 case "PDF":
-                    colorNo = MetroFramework.MetroColorStyle.Red;
-                    break;
-                case "JPEG":
-                    colorNo = MetroFramework.MetroColorStyle.Lime;
-                    break;
-                case "EXE":
-                    colorNo = MetroFramework.MetroColorStyle.Green;
-                    break;
                 case "HWP":
-                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                    colorNo = MetroFramework.MetroColorStyle.PDFnHWP;
                     break;
-                case "WORD":
-                    colorNo = MetroFramework.MetroColorStyle.Blue;
-                    break;
+                case "PPTX":
                 case "XLSX":
-                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                case "DOCX":
+                    colorNo = MetroFramework.MetroColorStyle.PPTXnXLSXnDOCX;
                     break;
-                case "PPT":
-                    colorNo = MetroFramework.MetroColorStyle.Blue;
+                case "TXT":
+                    colorNo = MetroFramework.MetroColorStyle.TXT;
                     break;
-                case "MP3":
-                    colorNo = MetroFramework.MetroColorStyle.Purple;
+                case "PY":
+                    colorNo = MetroFramework.MetroColorStyle.PY;
                     break;
+                case "AVI":
                 case "MP4":
-                    colorNo = MetroFramework.MetroColorStyle.Purple;
+                    colorNo = MetroFramework.MetroColorStyle.AVInMP4;
                     break;
+                case "JS":
+                    colorNo = MetroFramework.MetroColorStyle.JS;
+                    break;
+                case "ZIP":
+                    colorNo = MetroFramework.MetroColorStyle.ZIP;
+                    break;
+                case "HTML":
+                    colorNo = MetroFramework.MetroColorStyle.HTML;
+                    break;
+                case "CS":
+                case "ASP":
+                    colorNo = MetroFramework.MetroColorStyle.CSnASP;
+                    break;
+                   
                 default:
-                    colorNo = MetroFramework.MetroColorStyle.Silver;
+                    colorNo = MetroFramework.MetroColorStyle.ETC;
                     break;
             }
 
@@ -197,7 +249,7 @@ namespace ClassBox
             {
                 this.panel_fileList.Controls.Clear();
 
-                foreach(string fileName in serverFileControl.FileList.Keys)
+                foreach(string fileName in serverFileControl.FileList.Values)
                 {
                     MetroPanel newTilePanel = CreateFileTile(fileName);
 
@@ -225,6 +277,6 @@ namespace ClassBox
             }
         }
 
-       
+        
     }
 }
