@@ -54,21 +54,23 @@ namespace ClassBox
                 {
                     return false;
                 }
-
-                comm.CommandText = "INSERT INTO user VALUES(@id, @name, @password, @accessno)";
-
-                comm.Parameters.AddWithValue("@id", userDTO.Id);
-                comm.Parameters.AddWithValue("@password", userDTO.Password);
-                comm.Parameters.AddWithValue("@name", userDTO.Name);
-                comm.Parameters.AddWithValue("@accessno", userDTO.Accessno);
-
-                comm.ExecuteNonQuery();
-
-                comm.Dispose();
-                conn.Close();
-
-                return true;
             }
+
+                
+            comm.CommandText = "INSERT INTO user VALUES(@id, @name, @password, @accessno)";
+
+            //comm.Parameters.AddWithValue("@id", userDTO.Id);
+            comm.Parameters.AddWithValue("@password", userDTO.Password);
+            comm.Parameters.AddWithValue("@name", userDTO.Name);
+            comm.Parameters.AddWithValue("@accessno", userDTO.Accessno);
+
+            comm.ExecuteNonQuery();
+
+            comm.Dispose();
+            conn.Close();
+
+            return true;
+            
                 
         }
     }

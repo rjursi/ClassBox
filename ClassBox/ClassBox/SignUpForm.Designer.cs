@@ -110,7 +110,7 @@
             this.radio_professor.TabIndex = 14;
             this.radio_professor.TabStop = true;
             this.radio_professor.Text = "교수자";
-            this.radio_professor.UseVisualStyleBackColor = true;
+            
             // 
             // radio_stu
             // 
@@ -120,7 +120,7 @@
             this.radio_stu.Size = new System.Drawing.Size(59, 15);
             this.radio_stu.TabIndex = 14;
             this.radio_stu.Text = "학습자";
-            this.radio_stu.UseVisualStyleBackColor = true;
+           
             // 
             // lbl_userType
             // 

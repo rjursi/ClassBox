@@ -37,7 +37,7 @@
             this.timer_stuListUpdate = new System.Windows.Forms.Timer(this.components);
             this.fileDlg_selectFile = new System.Windows.Forms.OpenFileDialog();
             this.timer_fileListUpdate = new System.Windows.Forms.Timer(this.components);
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.lbl_info = new MetroFramework.Controls.MetroLabel();
             this.tooltip_filename = new MetroFramework.Components.MetroToolTip();
             this.metroUserControl1 = new MetroFramework.Controls.MetroUserControl();
             this.panel_fileList.SuspendLayout();
@@ -114,14 +114,14 @@
             // 
             this.timer_fileListUpdate.Tick += new System.EventHandler(this.timer_fileListUpdate_Tick);
             // 
-            // metroLabel1
+            // lbl_info
             // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(200, 95);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(244, 19);
-            this.metroLabel1.TabIndex = 4;
-            this.metroLabel1.Text = "* 파일을 클릭하면 삭제가 가능합니다.";
+            this.lbl_info.AutoSize = true;
+            this.lbl_info.Location = new System.Drawing.Point(200, 95);
+            this.lbl_info.Name = "lbl_info";
+            this.lbl_info.Size = new System.Drawing.Size(244, 19);
+            this.lbl_info.TabIndex = 4;
+            this.lbl_info.Text = "* 파일을 클릭하면 삭제가 가능합니다.";
             // 
             // tooltip_filename
             // 
@@ -143,7 +143,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 514);
             this.Controls.Add(this.metroUserControl1);
-            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(this.lbl_info);
             this.Controls.Add(this.btn_fileUpload);
             this.Controls.Add(this.lbl_userList);
             this.Controls.Add(this.listbox_stuList);
@@ -169,7 +169,7 @@
         private System.Windows.Forms.Timer timer_stuListUpdate;
         private System.Windows.Forms.OpenFileDialog fileDlg_selectFile;
         private System.Windows.Forms.Timer timer_fileListUpdate;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroLabel lbl_info;
         private MetroFramework.Controls.MetroScrollBar scrollbar_fileList;
         private MetroFramework.Components.MetroToolTip tooltip_filename;
         private MetroFramework.Controls.MetroUserControl metroUserControl1;
