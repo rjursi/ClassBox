@@ -136,7 +136,7 @@ namespace ClassBox
             int extLabel_y = (tile.Height / 2) - 10;
 
             tile.Text = Path.GetExtension(fInfo.FullName).Replace(".", "").ToUpper();
-            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Extreme;
             mLabel.Text = Path.GetFileNameWithoutExtension(fileName);
             mLabel.Location = new Point(extLabel_x, extLabel_y);
             mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);

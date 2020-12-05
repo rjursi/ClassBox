@@ -108,9 +108,9 @@ namespace ClassBox
                         {
                             foreach (string fileName in serverFileControl.FileList.Values)
                             {
-                                
+                               
                                 fileList += fileName;
-                                fileList += ',';
+                                fileList += '|';
                             }
                         }
                       

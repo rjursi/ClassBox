@@ -88,7 +88,7 @@ namespace ClassBox
             int extLabel_y = (tile.Height / 2) - 10;
 
             tile.Text = Path.GetExtension(fInfo.FullName).Replace(".", "").ToUpper();
-            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Extreme;
             mLabel.Text = Path.GetFileNameWithoutExtension(fileName);
             mLabel.Location = new Point(extLabel_x, extLabel_y);
             mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
@@ -220,7 +220,8 @@ namespace ClassBox
         {
             List<string> fileList = new List<string>();
 
-            string[] receivedFileNameArr = receivedFileList.Split(',');
+            string[] receivedFileNameArr = receivedFileList.Split('|');
+
             int arrCnt = receivedFileNameArr.Length - 1;
             fileList = receivedFileNameArr.ToList<string>();
 
@@ -229,6 +230,7 @@ namespace ClassBox
                 this.panel_filelist.Controls.Clear();
                 foreach (string fileName in fileList)
                 {
+                    Console.WriteLine(fileName);
                     int index = fileList.IndexOf(fileName);
                     if (index != arrCnt)
                     {

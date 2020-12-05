@@ -47,6 +47,7 @@ namespace ClassBox
             string fileName = filePath.Split('\\')[fileNameIndex];
             string inServerFilePath = Path.Combine(uploadFolderPath, fileName);
 
+            
             File.Copy(filePath, inServerFilePath);
             // 파일 복사 과정
 
