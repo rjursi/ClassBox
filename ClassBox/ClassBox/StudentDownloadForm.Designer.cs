@@ -46,6 +46,12 @@
             this.timer_fileListRefresh.Interval = 500;
             this.timer_fileListRefresh.Tick += new System.EventHandler(this.timer_fileListRefresh_Tick);
             // 
+            // tooltip_filename
+            // 
+            this.tooltip_filename.Style = MetroFramework.MetroColorStyle.Blue;
+            this.tooltip_filename.StyleManager = null;
+            this.tooltip_filename.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
             // StudentDownloadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);

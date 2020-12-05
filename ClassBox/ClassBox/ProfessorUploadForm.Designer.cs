@@ -77,7 +77,7 @@
             this.listbox_stuList.ItemHeight = 21;
             this.listbox_stuList.Location = new System.Drawing.Point(23, 127);
             this.listbox_stuList.Name = "listbox_stuList";
-            this.listbox_stuList.Size = new System.Drawing.Size(147, 361);
+            this.listbox_stuList.Size = new System.Drawing.Size(121, 361);
             this.listbox_stuList.TabIndex = 1;
             // 
             // lbl_userList

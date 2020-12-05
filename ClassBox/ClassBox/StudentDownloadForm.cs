@@ -82,13 +82,13 @@ namespace ClassBox
             tile.Width = 151;
             tile.Height = 96;
 
-            int label_x = tile.Width - (tile.Width / 3);
-            int extLabel_x = label_x - (tile.Width / 3) * 2;
+            int label_x = tile.Width - (tile.Width / 3) - 10;
+            int extLabel_x = label_x - (tile.Width / 3) * 2 + 15;
             int label_y = tile.Height - (tile.Height / 3);
-            int extLabel_y = label_y - (tile.Height / 3);
+            int extLabel_y = (tile.Height / 2) - 10;
 
             tile.Text = Path.GetExtension(fInfo.FullName).Replace(".", "").ToUpper();
-
+            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             mLabel.Text = Path.GetFileNameWithoutExtension(fileName);
             mLabel.Location = new Point(extLabel_x, extLabel_y);
             mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
