@@ -39,7 +39,7 @@ namespace ClassBox
                 Array.Clear(this.buffer, 0, this.bufferSize);
             }
         }
-
+        
 
 
        

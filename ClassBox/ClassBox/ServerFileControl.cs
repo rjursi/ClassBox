@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net.Sockets;
-
+using Microsoft.VisualBasic.FileIO;
 namespace ClassBox
 {
     public class ServerFileControl
@@ -19,12 +19,13 @@ namespace ClassBox
 
         public void DeleteServerDirectory()
         {
-            Directory.Delete(uploadFolderPath, true);
+            FileSystem.DeleteDirectory(uploadFolderPath,UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);
         }
 
         public void DeleteFile(string fileName)
         {
-            File.Delete(Path.Combine(uploadFolderPath, fileName));
+            FileSystem.DeleteFile(Path.Combine(uploadFolderPath, fileName),UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);
+            // File.Delete(Path.Combine(uploadFolderPath, fileName));
             fileList.Remove(fileName);
         }
         public ServerFileControl()
@@ -36,8 +37,8 @@ namespace ClassBox
         {
             // 내 문서에다가 클래스 박스 업로드 폴더를 만듬
             uploadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), UPLOAD_FOLDER_NAME);
-            if (!Directory.Exists(uploadFolderPath)) {
-                Directory.CreateDirectory(uploadFolderPath);
+            if (!FileSystem.DirectoryExists(uploadFolderPath)) {
+                FileSystem.CreateDirectory(uploadFolderPath);
             }
         }
 
@@ -48,7 +49,7 @@ namespace ClassBox
             string inServerFilePath = Path.Combine(uploadFolderPath, fileName);
 
             
-            File.Copy(filePath, inServerFilePath);
+            FileSystem.CopyFile(filePath, inServerFilePath,UIOption.AllDialogs);
             // 파일 복사 과정
 
             fileList.Add(fileName, inServerFilePath);
@@ -76,21 +77,16 @@ namespace ClassBox
                 FileInfo fileinfo = new FileInfo(filePath);
 
                 Console.WriteLine($"filepath : {filePath}");
-                /*
-                byte[] fileName = Encoding.UTF8.GetBytes(fileinfo.Name); // 파일명
-                byte[] fileNameSize = BitConverter.GetBytes(fileName.Length); // 파일 이름 사이즈
-                */
+           
 
-                byte[] fileSize = File.ReadAllBytes(filePath); // 파일 사이즈
+                
+                byte[] fileSize = FileSystem.ReadAllBytes(filePath); // 파일 사이즈
                 byte[] file = BitConverter.GetBytes(fileSize.Length) ; // 파일
                 
                 
-                // byte[] sendBuffer = new byte[fileName.Length + fileNameSize.Length + file.Length + fileSize.Length];
+              
                 byte[] sendBuffer = new byte[file.Length + fileSize.Length];
-                /*
-                Buffer.BlockCopy(fileNameSize, 0, sendBuffer, 0, fileNameSize.Length);
-                Buffer.BlockCopy(fileName, 0, sendBuffer, fileNameSize.Length, fileName.Length);
-                */
+               
 
                 Buffer.BlockCopy(file, 0, sendBuffer, 0, file.Length);
                 Buffer.BlockCopy(fileSize, 0, sendBuffer, file.Length, fileSize.Length);
@@ -104,15 +100,12 @@ namespace ClassBox
 
                     sendBuffer = ByteMove(sendBuffer, temp.Length, sendBuffer.Length - temp.Length);
                     clientSocket.Send(temp);
-                    //clientSocket.Receive(new Byte[32]); //받았다는 신호를 받는 곳
+                    
 
                 }
                 
                 clientSocket.Send(sendBuffer); // 나머지 데이터를 보냄
-                // clientSocket.Receive(new Byte[32]); //받았다는 신호를 받는 곳
-
-                
-
+             
             }
             catch (ArgumentException e)
             {

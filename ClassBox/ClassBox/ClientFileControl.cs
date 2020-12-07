@@ -25,11 +25,6 @@ namespace ClassBox
             byte[] temp;
 
 
-            // byte[] fileNameSizeBuffer = new byte[4];
-            // byte[] fileNameBuffer;
-
-
-
             int receiveSize = 0;
             // int fileNameLength = 0;
             int fileSize = 0;
@@ -45,13 +40,7 @@ namespace ClassBox
                 
                 if (receiveSize > 0)
                 {
-                    /*
-                    Buffer.BlockCopy(receiveBuffer, 0, fileNameSizeBuffer, 0, fileNameSizeBuffer.Length);
-                    fileNameLength = BitConverter.ToInt32(fileNameSizeBuffer, 0);
-                    fileNameBuffer = new byte[fileNameLength]; // 파일 이름이 들어갈 공간을 만듬
-
-                    Buffer.BlockCopy(receiveBuffer, fileNameSizeBuffer.Length, fileNameBuffer, 0, fileNameBuffer.Length);
-                    */
+               
                      
                     Buffer.BlockCopy(receiveBuffer, 0, fileSizeBuffer, 0, fileSizeBuffer.Length);
 
@@ -85,7 +74,7 @@ namespace ClassBox
 
                         fileBuffer = temp;
                         
-                        //serverSocket.Send(Encoding.UTF8.GetBytes("next"));
+                    
                     }
                     Console.WriteLine($"fileSize : {fileSize}, fileSizeSum : {fileSizeSum}");
                     if (fileSize != fileSizeSum)

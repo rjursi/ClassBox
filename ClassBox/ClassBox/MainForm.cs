@@ -18,8 +18,7 @@ namespace ClassBox
        
         UserDTO userDTO; // 여기서 Accessno 에 따라 할 수 있는 역할이 달라짐
 
-        
-
+     
         public MainForm()
         {
             InitializeComponent();
@@ -135,7 +134,7 @@ namespace ClassBox
             // 해당 타일을 클릭하는 경우, 즉 학생이 접속하는 경우에 해당
             Button joinRoom_tile = (MetroTile)sender;
             int joinRoomNo = Int32.Parse(joinRoom_tile.Name.Split('_')[1]); // 클릭한 타일의 Name 값에 방 번호가 저장되어 있음
-            if(this.userDTO.Accessno == 1) // 교수는 다른 방에 들어가지 못하도록 우선적으로 막음, 일단은...
+            if(this.userDTO.Accessno == 1) // 교수는 다른 방에 들어가지 못하도록 우선적으로 막음.
             {
                 MessageBox.Show("학생만 다른 방에 들어갈 수 있습니다.", "방 들어가기", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
