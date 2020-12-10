@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net.Sockets;
 using Microsoft.VisualBasic.FileIO;
+using System.Windows.Forms;
+
 namespace ClassBox
 {
     public class ServerFileControl
@@ -47,14 +49,21 @@ namespace ClassBox
             int fileNameIndex = filePath.Split('\\').Length - 1;
             string fileName = filePath.Split('\\')[fileNameIndex];
             string inServerFilePath = Path.Combine(uploadFolderPath, fileName);
+            FileInfo fInfo = new FileInfo(filePath);
+            if(fInfo.Length > 10485760){
+                Console.WriteLine(fInfo.Length);
+                MessageBox.Show("10MB 이상의 파일은 업로드 할 수 없습니다.", "용량 제한", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return "fail";
+            }else{
+                FileSystem.CopyFile(filePath, inServerFilePath, UIOption.AllDialogs);
+                // 파일 복사 과정
 
-            
-            FileSystem.CopyFile(filePath, inServerFilePath,UIOption.AllDialogs);
-            // 파일 복사 과정
+                fileList.Add(fileName, inServerFilePath);
+               
+                return fileName;
+            }
 
-            fileList.Add(fileName, inServerFilePath);
-
-            return fileName;
+           
 
         }
 

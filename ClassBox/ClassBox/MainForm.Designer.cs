@@ -42,6 +42,7 @@
             this.btn_createRoom.Size = new System.Drawing.Size(117, 32);
             this.btn_createRoom.TabIndex = 2;
             this.btn_createRoom.Text = "방 생성";
+            this.btn_createRoom.UseSelectable = true;
             this.btn_createRoom.Visible = false;
             this.btn_createRoom.Click += new System.EventHandler(this.btn_createRoom_Click);
             // 
@@ -60,6 +61,7 @@
             this.btn_Logout.Size = new System.Drawing.Size(75, 23);
             this.btn_Logout.TabIndex = 4;
             this.btn_Logout.Text = "로그아웃";
+            this.btn_Logout.UseSelectable = true;
             this.btn_Logout.Click += new System.EventHandler(this.btn_Logout_Click);
             // 
             // lbl_username
@@ -79,6 +81,7 @@
             this.btn_refreshRoom.Size = new System.Drawing.Size(111, 32);
             this.btn_refreshRoom.TabIndex = 6;
             this.btn_refreshRoom.Text = "새로고침";
+            this.btn_refreshRoom.UseSelectable = true;
             this.btn_refreshRoom.Click += new System.EventHandler(this.btn_refreshRoom_Click);
             // 
             // MainForm
@@ -91,7 +94,7 @@
             this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.roomListPanel);
             this.Controls.Add(this.btn_createRoom);
-            this.MinimizeBox = false;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Resizable = false;
             this.Text = "방 목록";

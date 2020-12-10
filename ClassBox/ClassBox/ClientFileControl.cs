@@ -19,14 +19,13 @@ namespace ClassBox
 
         public void Receive(FileDownloadForm fileDownloadForm, Socket serverSocket, string newFilename)
         {
-            byte[] receiveBuffer = new byte[4096];
+            byte[] receiveBuffer = new byte[32768];
             byte[] fileSizeBuffer = new byte[4];
             byte[] fileBuffer;
             byte[] temp;
 
 
             int receiveSize = 0;
-            // int fileNameLength = 0;
             int fileSize = 0;
             int fileSizeSum = 0;
             int persent = 0;
@@ -111,6 +110,7 @@ namespace ClassBox
         {
             byte[] resultByte = new byte[moveCount];
             Buffer.BlockCopy(afterByte, movePoint, resultByte, 0, moveCount);
+            Console.WriteLine("resultByte Size : " + resultByte.Length);
             return resultByte;
         }
     }

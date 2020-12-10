@@ -78,9 +78,8 @@ namespace ClassBox
                 filePath = fileDlg_selectFile.FileName;
 
                 fileName = serverFileControl.FileUpload(filePath);
-
-                MessageBox.Show("파일 업로드가 완료되었습니다.", "파일 업로드", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                
+  
             }
         }
 
@@ -266,7 +265,6 @@ namespace ClassBox
                 serverFileControl.FileUpload(filepath);
             }
 
-            MessageBox.Show("파일 업로드가 완료되었습니다.", "파일 업로드", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void panel_fileList_DragEnter(object sender, DragEventArgs e)

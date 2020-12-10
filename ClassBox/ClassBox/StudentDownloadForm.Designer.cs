@@ -36,6 +36,7 @@
             // 
             // panel_filelist
             // 
+            this.panel_filelist.AutoScroll = true;
             this.panel_filelist.Location = new System.Drawing.Point(23, 81);
             this.panel_filelist.Name = "panel_filelist";
             this.panel_filelist.Size = new System.Drawing.Size(934, 412);

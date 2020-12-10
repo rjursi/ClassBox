@@ -44,8 +44,9 @@ namespace ClassBox
                     {
                         this.lbl_username.Text = $"안녕하세요. {this.userDTO.Name} 학생 ";
                     }
-
+                   
                     this.ShowAllRoomList(); // 기존에 데이터베이스에 저장되어있는 방 리스트를 가져옴
+                   
                 }
 
                 else if(dialogResult == DialogResult.Cancel) // 로그인 안하고 그냥 꺼버릴 경우
@@ -60,26 +61,33 @@ namespace ClassBox
         private void ShowAllRoomList()
         {
             // 처음 학생이든 교수자든 접속시 모든 방의 목록을 가져오는 함수
-            this.roomListPanel.Controls.Clear();
-
+            
             RoomDAO roomDAO = new RoomDAO();
             ArrayList roomList = roomDAO.GetAllRoomList();
 
-            foreach(RoomDTO roomDTO in roomList)
+            int nowRoomCnt = this.roomListPanel.Controls.Count;
+
+            if(nowRoomCnt != roomList.Count)
             {
+                this.roomListPanel.Controls.Clear();
 
-                MetroTile tile = new MetroTile();
+                foreach (RoomDTO roomDTO in roomList)
+                {
 
-                tile.Width = 141;
-                tile.Height = 86;
+                    MetroTile tile = new MetroTile();
 
-                tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
+                    tile.Width = 141;
+                    tile.Height = 86;
 
-                tile.Text = roomDTO.Name;
+                    tile.Name = $"roomTile_{roomDTO.No}_{roomDTO.Name}";
 
-                tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
-                this.roomListPanel.Controls.Add(tile);
+                    tile.Text = roomDTO.Name;
+
+                    tile.Click += new EventHandler(this.roomTile_Click); // 방 생성시 학생이 입장이 가능하도록 이벤트 핸들러 설정
+                    this.roomListPanel.Controls.Add(tile);
+                }
             }
+            
             
 
         }
@@ -175,5 +183,6 @@ namespace ClassBox
         {
             ShowAllRoomList();
         }
+
     }
 }
