@@ -50,17 +50,22 @@ namespace ClassBox
             string fileName = filePath.Split('\\')[fileNameIndex];
             string inServerFilePath = Path.Combine(uploadFolderPath, fileName);
             FileInfo fInfo = new FileInfo(filePath);
+            
             if(fInfo.Length > 10485760){
                 Console.WriteLine(fInfo.Length);
                 MessageBox.Show("10MB 이상의 파일은 업로드 할 수 없습니다.", "용량 제한", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return "fail";
             }else{
-                FileSystem.CopyFile(filePath, inServerFilePath, UIOption.AllDialogs);
-                // 파일 복사 과정
+            
 
-                fileList.Add(fileName, inServerFilePath);
+            FileSystem.CopyFile(filePath, inServerFilePath, UIOption.AllDialogs);
+            // 파일 복사 과정
+
+            fileList.Add(fileName, inServerFilePath);
                
-                return fileName;
+            return fileName;
+
+
             }
 
            
@@ -89,8 +94,8 @@ namespace ClassBox
            
 
                 
-                byte[] fileSize = FileSystem.ReadAllBytes(filePath); // 파일 사이즈
-                byte[] file = BitConverter.GetBytes(fileSize.Length) ; // 파일
+                byte[] fileSize = FileSystem.ReadAllBytes(filePath);
+                byte[] file = BitConverter.GetBytes(fileSize.Length) ; 
                 
                 
               

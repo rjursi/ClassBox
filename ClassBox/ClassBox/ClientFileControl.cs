@@ -19,7 +19,7 @@ namespace ClassBox
 
         public void Receive(FileDownloadForm fileDownloadForm, Socket serverSocket, string newFilename)
         {
-            byte[] receiveBuffer = new byte[32768];
+            byte[] receiveBuffer = new byte[4096];
             byte[] fileSizeBuffer = new byte[4];
             byte[] fileBuffer;
             byte[] temp;
