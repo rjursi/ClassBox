@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace ClassBox
 {
     
-    class ClientSocketWork
+    public class ClientSocketWork
     {
        
         private Socket mainSocket; 
@@ -21,9 +21,14 @@ namespace ClassBox
         private UserDTO userDTO;
         private ServerObject serverObject;
         private StudentDownloadForm stuForm;
+        private ClientFileControl clientFileControl;
+        private string newFileNameTemp = "";
+
+
         public ClientSocketWork(UserDTO userDTO, StudentDownloadForm stuForm)
         {
-           
+
+            this.clientFileControl = new ClientFileControl();
             this.userDTO = userDTO;
             this.stuForm = stuForm;
         }
@@ -50,10 +55,25 @@ namespace ClassBox
         public string ServerIP { get => this.serverIP; set => this.serverIP = value; }
         public void RequestRefresh()
         {
-            mainSocket.Send(Encoding.UTF8.GetBytes("requestFileList"));
+            try
+            {
+                mainSocket.Send(Encoding.UTF8.GetBytes("requestFileList"));
+            }
+            catch (ObjectDisposedException)
+            {
+                Console.WriteLine("exception : 서버가 이미 종료되었음.");
+            }
+            
             
         }
 
+        public void RequestFileDownload(string requestFileName, string newFileName)
+        {
+            string requestString = $"DownloadFile&{requestFileName}";
+            this.newFileNameTemp = newFileName;
+            mainSocket.Send(Encoding.UTF8.GetBytes(requestString));
+
+        }
         public void RequestSocketClose()
         {
             try
@@ -82,7 +102,7 @@ namespace ClassBox
                     if (Encoding.UTF8.GetString(so.buffer).Contains("fileList")) // 접속 요청 데이터 받기
                     {
                         string receivedFileList = Encoding.UTF8.GetString(so.buffer).Split('&')[1];
-                        Console.WriteLine("client : flieList Received : " + receivedFileList);
+                        // Console.WriteLine("client : flieList Received : " + receivedFileList);
                         stuForm.Invoke(
                             (MethodInvoker)delegate {
                                 stuForm.FileListRefresh(receivedFileList);
@@ -90,8 +110,24 @@ namespace ClassBox
                         );
 
                     }
+                    else if (Encoding.UTF8.GetString(so.buffer).Contains("fileSendStart"))
+                    {
+                        stuForm.Invoke((MethodInvoker)delegate
+                        {
+                            stuForm.timer_fileListRefresh.Enabled = false;
+                        });
 
-                    if (Encoding.UTF8.GetString(so.buffer).Contains("roomClose")) // 접속 요청 데이터 받기
+                        Console.WriteLine("client : fileSendStart");
+                        so.serverSocket.Send(Encoding.UTF8.GetBytes("okay"));
+                        clientFileControl.Receive(stuForm.fileDownloadForm, so.serverSocket, newFileNameTemp);
+                        
+                        stuForm.Invoke((MethodInvoker)delegate
+                        {
+                            stuForm.timer_fileListRefresh.Enabled = true;
+                        });
+
+                    }
+                    else if (Encoding.UTF8.GetString(so.buffer).Contains("roomClose")) // 접속 요청 데이터 받기
                     {
                         so.ClearBuffer();
                         so.serverSocket.Close();
@@ -119,9 +155,7 @@ namespace ClassBox
         public void SocketConnection()
         {
             
-           
 
-           
             try
             {
                 mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); // 서버를 가르키는 소켓
@@ -144,8 +178,7 @@ namespace ClassBox
             {
                 
             }
-            
-            
+              
         }
         
     }

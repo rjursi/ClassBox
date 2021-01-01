@@ -89,7 +89,7 @@ namespace ClassBox
             } // 방 번호 할당
 
             
-            roomDTO.No = maxRoomno;
+            roomDTO.No = maxRoomno + 1;
 
             comm.CommandText = "INSERT INTO room VALUES(@no, @name, @id, @createtime, @ipaddress)";
 

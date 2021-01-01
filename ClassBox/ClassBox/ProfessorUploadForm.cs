@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
-
+using System.IO;
 
 namespace ClassBox
 {
@@ -78,24 +78,155 @@ namespace ClassBox
                 filePath = fileDlg_selectFile.FileName;
 
                 fileName = serverFileControl.FileUpload(filePath);
-
-                MessageBox.Show("파일 업로드가 완료되었습니다.", "파일 업로드", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                
+  
             }
         }
 
-        private MetroTile CreateFileTile(string fileName)
+
+        private readonly string[] SizeSuffixes =
+                   { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        private string SizeSuffix(Int64 value, int decimalPlaces = 1)
         {
+            if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
+            if (value < 0) { return "-" + SizeSuffix(-value); }
+            if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} B", 0); }
+
+            // mag is 0 for bytes, 1 for KB, 2, for MB, etc.
+            int mag = (int)Math.Log(value, 1024);
+
+            // 1L << (mag * 10) == 2 ^ (10 * mag) 
+            // [i.e. the number of bytes in the unit corresponding to mag]
+            decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+
+            // make adjustment when the value is large enough that
+            // it would round up to 1000 or more
+            if (Math.Round(adjustedSize, decimalPlaces) >= 1000)
+            {
+                mag += 1;
+                adjustedSize /= 1024;
+            }
+
+            return string.Format("{0:n" + decimalPlaces + "} {1}",
+                adjustedSize,
+                SizeSuffixes[mag]);
+        }
+
+        private MetroPanel CreateFileTile(string fileName)
+        {
+            FileInfo fInfo = new FileInfo(fileName);
+            
+            MetroPanel mPanel = new MetroPanel();
             MetroTile tile = new MetroTile();
+            MetroLabel mLabel = new MetroLabel(); // 파일명
+            MetroLabel mSize = new MetroLabel(); // 용량
 
-            tile.Width = 141;
-            tile.Height = 86;
 
-            tile.Name = fileName;
-            tile.Text = fileName;
+            mPanel.Width = 170;
+            mPanel.Height = 105;
+
+            
+            tile.Width = 151;
+            tile.Height = 96;
+
+            int label_x = tile.Width - (tile.Width / 3) - 10;
+            int extLabel_x = label_x - (tile.Width / 3) * 2 + 15;
+            int label_y = tile.Height - (tile.Height / 3);
+            int extLabel_y = (tile.Height / 2) - 10;
+
+            tile.Text = Path.GetExtension(fInfo.FullName).Replace(".", "").ToUpper();
+            tile.TileTextFontSize = MetroFramework.MetroTileTextSize.Extreme;
+            mLabel.Text = Path.GetFileNameWithoutExtension(fileName);
+            mLabel.Location = new Point(extLabel_x, extLabel_y);
+            mLabel.Font = new Font(mLabel.Font.FontFamily, 25, FontStyle.Bold);
+            mLabel.Style = this.StylePicker(tile.Text);
+           
+            mSize.Text = SizeSuffix(fInfo.Length);
+            mSize.Location = new Point(label_x, label_y);
+            mSize.Style = this.StylePicker(tile.Text);
+            tile.Name = fInfo.Name;
+            
+            tile.TextAlign = ContentAlignment.TopLeft;
+
+            
+            tile.Style = this.StylePicker(tile.Text);
+            
+            mPanel.Controls.Add(tile);
+            tile.Controls.Add(mLabel);
+            tile.Controls.Add(mSize);
+            
 
             tile.Click += new EventHandler(this.tile_Click_fileDelete);
-            return tile;
+            tile.MouseHover += new EventHandler(this.tile_MouseHover_toolTip);
+         
+
+            
+            return mPanel;
+        }
+        private MetroFramework.MetroColorStyle StylePicker(string ext)
+        {
+            MetroFramework.MetroColorStyle colorNo;
+            switch (ext)
+            {
+                case "JAVA":
+                case "JSP":
+                    colorNo = MetroFramework.MetroColorStyle.JAVAnJSP;
+                    break;    
+                
+                 
+                case "PNG":
+                case "JPG":
+                case "GIF":
+                    colorNo = MetroFramework.MetroColorStyle.PNGnJPGnGIF;
+                    break;
+                case "PDF":
+                case "HWP":
+                    colorNo = MetroFramework.MetroColorStyle.PDFnHWP;
+                    break;
+                case "PPTX":
+                case "XLSX":
+                case "DOCX":
+                    colorNo = MetroFramework.MetroColorStyle.PPTXnXLSXnDOCX;
+                    break;
+                case "TXT":
+                    colorNo = MetroFramework.MetroColorStyle.TXT;
+                    break;
+                case "PY":
+                    colorNo = MetroFramework.MetroColorStyle.PY;
+                    break;
+                case "AVI":
+                case "MP4":
+                    colorNo = MetroFramework.MetroColorStyle.AVInMP4;
+                    break;
+                case "JS":
+                    colorNo = MetroFramework.MetroColorStyle.JS;
+                    break;
+                case "ZIP":
+                    colorNo = MetroFramework.MetroColorStyle.ZIP;
+                    break;
+                case "HTML":
+                    colorNo = MetroFramework.MetroColorStyle.HTML;
+                    break;
+                case "CS":
+                case "ASP":
+                    colorNo = MetroFramework.MetroColorStyle.CSnASP;
+                    break;
+                   
+                default:
+                    colorNo = MetroFramework.MetroColorStyle.ETC;
+                    break;
+            }
+
+
+            return colorNo;
+        }
+        
+        private void tile_MouseHover_toolTip(object sender, EventArgs e)
+        {
+            Button tile = (MetroTile)sender;
+            this.tooltip_filename.ToolTipTitle = "파일명";
+            this.tooltip_filename.IsBalloon = true;
+            this.tooltip_filename.SetToolTip(tile, tile.Name);
         }
         private void tile_Click_fileDelete(object sender, EventArgs e)
         {
@@ -117,12 +248,30 @@ namespace ClassBox
             {
                 this.panel_fileList.Controls.Clear();
 
-                foreach(string fileName in serverFileControl.FileList.Keys)
+                foreach(string fileName in serverFileControl.FileList.Values)
                 {
-                    MetroTile newTile = CreateFileTile(fileName);
+                    MetroPanel newTilePanel = CreateFileTile(fileName);
 
-                    this.panel_fileList.Controls.Add(newTile);
+                    this.panel_fileList.Controls.Add(newTilePanel);
                 }
+            }
+        }
+
+        private void panel_fileList_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string filepath in files)
+            {
+                serverFileControl.FileUpload(filepath);
+            }
+
+        }
+
+        private void panel_fileList_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
             }
         }
 

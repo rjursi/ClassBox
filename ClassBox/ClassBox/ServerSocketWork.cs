@@ -22,7 +22,6 @@ namespace ClassBox
             public Byte[] buffer;
             public readonly int bufferSize;
             public Socket clientSocket;
-
             public string address;
 
 
@@ -40,7 +39,7 @@ namespace ClassBox
                 Array.Clear(this.buffer, 0, this.bufferSize);
             }
         }
-
+        
 
 
        
@@ -107,16 +106,26 @@ namespace ClassBox
                         fileList += "fileList&";
                         if (serverFileControl.FileList.Count > 0)
                         {
-                            foreach (string fileName in serverFileControl.FileList.Keys)
+                            foreach (string fileName in serverFileControl.FileList.Values)
                             {
-                                
+                               
                                 fileList += fileName;
-                                fileList += ',';
+                                fileList += '|';
                             }
                         }
                       
                         co.clientSocket.Send(Encoding.UTF8.GetBytes(fileList));
 
+                    }else if (Encoding.UTF8.GetString(co.buffer).Contains("DownloadFile"))
+                    {
+                        string filename = Encoding.UTF8.GetString(co.buffer).Split('&')[1].TrimEnd('\0');
+                        Console.WriteLine("server : get request file download");
+                        co.clientSocket.Send(Encoding.UTF8.GetBytes("fileSendStart"));
+                        co.clientSocket.Receive(new byte[32]); // "okay" 신호를 받고 나서 대기
+                        Console.WriteLine("server : get okay");
+                        Console.WriteLine(filename);
+                        serverFileControl.SendFile(co.clientSocket, filename);
+                        
                     }
 
                     co.ClearBuffer(); // 데이터 받았으니 버퍼 비움

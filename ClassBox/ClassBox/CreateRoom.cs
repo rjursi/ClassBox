@@ -27,7 +27,7 @@ namespace ClassBox
             return this.roomDTO;
         }
 
-
+        // 방 생성시 자신의 로컬 IP 중 Gateway로 외부 인터넷과 통신을 하는 인터페이스만 가져옴
         private IPAddress GetRealIpAddress()
         {
 
